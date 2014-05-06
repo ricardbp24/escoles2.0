@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-    <title>Escoles 2.0</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
-    <script src="js/jquery-2.1.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        var url = "http://api.flickr.com/services/feeds/photos_public.gne?id=31565400@N06&format=json&jsoncallback=?&tags=paisaje";
-
-        $.getJSON(url, function(data){
-
-           $.each(data.items, function(i, item){
-             $(".fullscreen_bg").css({"background-image":"url('"+item.media.m+"')");
-           });
-        });
+<head>
+  <title>Escoles 2.0</title>
+  <link href='http://fonts.googleapis.com/css?family=Gafata' rel='stylesheet' type='text/css'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=7d7ed7bd908a65eb0c33b0dc489b72a2&tags=delta+del+ebre&safe_search=1&per_page=500";
+      var src;
+      var id = random = Math.ceil(Math.random() * 500) + 1;
+      $.getJSON(url + "&format=json&jsoncallback=?", function(data){
+          //$.each(data.photos.photo, function(i,item){
+              src = "http://farm"+ data.photos.photo[id].farm +".static.flickr.com/"+ data.photos.photo[id].server +"/"+ data.photos.photo[id].id +"_"+ data.photos.photo[id].secret +"_b.jpg";
+              $("<img/>").attr("src", src).appendTo("#fullscreen_bg");
+              if ( i == 3 ) return false;
+          //});
       });
-    </script>
+    });
+  </script>
     <style>
       body {
         padding-top: 120px;
@@ -34,22 +38,26 @@
        border-left:none;
        border-right:none;
        box-shadow:inset 2px -3px rgba(0,0,0,0.15);
+       position: relative;
+        z-index: 2;
       }
       .btn:focus
       {
+        
        outline:0;
        -webkit-outline:0;
        -moz-outline:0;
       }
-      .fullscreen_bg {
+      .fullscreen_bg img {
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
+        width: 100%;
+        height: 100%;
         background-size: cover;
         background-position: 50% 50%;
-        background-image: url('http://cleancanvas.herokuapp.com/img/backgrounds/color-splash.jpg');
         background-repeat:repeat;
       }
       .form-signin {
@@ -95,23 +103,27 @@
         border-top:1px solid rgba(0,0,0,0.08);
       }
       .form-signin-heading {
+        font-family: 'Gafata', sans-serif;
+        position: relative;
         color: #fff;
         text-align: center;
         text-shadow: 0 2px 2px rgba(0,0,0,0.5);
+        z-index: 2;
       }
     </style>
+</head>
 <html>
-    <body>
-      <div id="fullscreen_bg" class="fullscreen_bg"></div>
-          <div class="container">
-             <form class="form-signin">
-                <h1 class="form-signin-heading text-muted">Entrada</h1>
-                <input type="text" class="form-control" name="usuari" placeholder="DNI" required="" autofocus="">
-                <input type="password" class="form-control" name="contrassenya" placeholder="Contrassenya" required="">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                   Sign In
-                </button>
-             </form>
-          </div>
-    </body>
+  <body>
+    <div id="fullscreen_bg" class="fullscreen_bg"></div>
+        <div class="container">
+          <form class="form-signin">
+            <h1 class="form-signin-heading text-muted strong">Escoles 2.0</h1>
+            <input type="text" class="form-control" name="usuari" placeholder="DNI" required="" autofocus="">
+            <input type="password" class="form-control" name="contrassenya" placeholder="Contrassenya" required="">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
+               Entrar
+            </button>
+          </form>
+        </div>
+  </body>
 </html>
