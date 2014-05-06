@@ -10,15 +10,14 @@
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=7d7ed7bd908a65eb0c33b0dc489b72a2&tags=delta+del+ebre&safe_search=1&per_page=500";
+      var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=8dfe6f1b310f7a5694c68de8c12d4703&tags=delta+del+ebre&safe_search=1&format=json&per_page=30&jsoncallback=?";
       var src;
-      var id = random = Math.ceil(Math.random() * 500) + 1;
-      $.getJSON(url + "&format=json&jsoncallback=?", function(data){
-          //$.each(data.photos.photo, function(i,item){
-              src = "http://farm"+ data.photos.photo[id].farm +".static.flickr.com/"+ data.photos.photo[id].server +"/"+ data.photos.photo[id].id +"_"+ data.photos.photo[id].secret +"_b.jpg";
+      var id = random = Math.ceil(Math.random() * 30) + 1;
+      $.getJSON(url, function(data){
+              src = "http://farm"+ data.photos.photo[id].farm +".staticflickr.com/"+ data.photos.photo[id].server +"/"+ data.photos.photo[id].id +"_"+ data.photos.photo[id].secret +"_c.jpg";
+              alert(src);
               $("<img/>").attr("src", src).appendTo("#fullscreen_bg");
               if ( i == 3 ) return false;
-          //});
       });
     });
   </script>
