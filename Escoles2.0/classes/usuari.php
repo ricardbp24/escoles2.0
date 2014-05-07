@@ -14,6 +14,7 @@ class usuari {
   private $telefon1;
   private $telefon2;
   private $dni;
+  private $password;
   private $carrer;
   private $codi_postal;
   private $poblacio;
@@ -21,8 +22,6 @@ class usuari {
   private $foto;
   private $tipus;
   private $alta;
-  private $compte_corrent;
-  private $persona_contacte;
   
   function __construct() {
     
@@ -52,6 +51,9 @@ class usuari {
   public function getDni() {
     return $this->dni;
   }
+  public function gePassword() {
+    return $this->password;
+  }
   public function getCarrer() {
     return $this->carrer;
   }
@@ -73,9 +75,6 @@ class usuari {
   public function getAlta() {
     return $this->alta;
   }
-  public function setId($id) {
-    $this->id = $id;
-  }
   public function setNom($nom) {
     $this->nom = $nom;
   }
@@ -96,6 +95,9 @@ class usuari {
   }
   public function setDni($dni) {
     $this->dni = $dni;
+  }
+  public function setPassword($pass) {
+    $this->password = $pass;
   }
   public function setCarrer($carrer) {
     $this->carrer = $carrer;
@@ -133,12 +135,13 @@ class director extends usuari {
 }
 
 class nouDirector extends director {
-  function __construct($dni,$nom,$c1,$c2,$dn,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
+  function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
     parent::__construct($dni);
     $this->nom = $nom;
     $this->cognom1 = $c1;
     $this->cognom2 = $c2;
     $this->data_naixement = $dn;
+    $this->password = $p;
     $this->telefon1 = $t1;
     $this->telefon2 = $t2;
     $this->carrer = $carrer;
@@ -159,12 +162,13 @@ class professor extends usuari {
 }
 
 class nouProfessor extends professor {
-  function __construct($dni,$nom,$c1,$c2,$dn,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
+  function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
     parent::__construct($dni);
     $this->nom = $nom;
     $this->cognom1 = $c1;
     $this->cognom2 = $c2;
     $this->data_naixement = $dn;
+    $this->password = $p;
     $this->telefon1 = $t1;
     $this->telefon2 = $t2;
     $this->carrer = $carrer;
@@ -185,12 +189,13 @@ class administratiu extends usuari {
 }
 
 class nouAdministratiu extends administratiu {
-  function __construct($dni,$nom,$c1,$c2,$dn,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
+  function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
     parent::__construct($dni);
     $this->nom = $nom;
     $this->cognom1 = $c1;
     $this->cognom2 = $c2;
     $this->data_naixement = $dn;
+    $this->password = $p;
     $this->telefon1 = $t1;
     $this->telefon2 = $t2;
     $this->carrer = $carrer;
@@ -204,6 +209,9 @@ class nouAdministratiu extends administratiu {
 }
 
 class alumne extends usuari {
+  private $compte_corrent;
+  private $persona_contacte;
+  
   function __construct($dni) {
     parent::__construct();
     $this->dni = $dni;
@@ -225,12 +233,14 @@ class alumne extends usuari {
 }
 
 class nouAlumne extends alumne {
-  function __construct($dni,$nom,$c1,$c2,$dn,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto,$ccc,$pc) {
+  
+  function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto,$ccc,$pc) {
     parent::__construct($dni);
     $this->nom = $nom;
     $this->cognom1 = $c1;
     $this->cognom2 = $c2;
     $this->data_naixement = $dn;
+    $this->password = $p;
     $this->telefon1 = $t1;
     $this->telefon2 = $t2;
     $this->carrer = $carrer;
