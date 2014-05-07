@@ -14,7 +14,7 @@
       var src;
       var id = random = Math.ceil(Math.random() * 30) + 1;
       $.getJSON(url, function(data){
-              src = "http://farm"+ data.photos.photo[id].farm +".staticflickr.com/"+ data.photos.photo[id].server +"/"+ data.photos.photo[id].id +"_"+ data.photos.photo[id].secret +"_c.jpg";
+              src = "http://farm"+ data.photos.photo[id].farm +".static.flickr.com/"+ data.photos.photo[id].server +"/"+ data.photos.photo[id].id +"_"+ data.photos.photo[id].secret +"_c.jpg";
               alert(src);
               $("<img/>").attr("src", src).appendTo("#fullscreen_bg");
               if ( i == 3 ) return false;
@@ -115,7 +115,7 @@
   <body>
     <div id="fullscreen_bg" class="fullscreen_bg"></div>
         <div class="container">
-          <form class="form-signin">
+          <form class="form-signin" method="post" action="login.php">
             <h1 class="form-signin-heading text-muted strong">Escoles 2.0</h1>
             <input type="text" class="form-control" name="usuari" placeholder="DNI" required="" autofocus="">
             <input type="password" class="form-control" name="contrassenya" placeholder="Contrassenya" required="">
