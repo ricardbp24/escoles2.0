@@ -1,6 +1,6 @@
 <?php
   ob_start();
-  session_start();
+  @session_start();
   
   include_once 'classes/connexio.php';
 
@@ -9,11 +9,13 @@
   
   $bd = new connexio();
   
-  $check = "SELECT DNI,Password,Tipus FROM Usuaris WHERE DNI = '$usuari' AND Password = '$pass' LIMIT 1";
+  $check = "SELECT ID,DNI,Password,Tipus FROM Usuaris WHERE DNI = '$usuari' AND Password = '$pass' LIMIT 1";
   $resultat = $bd->query($check);
   $files = $resultat->num_rows;
   if ($files==1) {
     $dades = $resultat->fetch_array(MYSQLI_ASSOC);
+    $_SESSION['id'] = $dades['ID'];
+    $_SESSION['dni'] = $dades['DNI'];
     switch ($dades['Tipus']) {
       case 1:
           header('Location: indexdirector.php');

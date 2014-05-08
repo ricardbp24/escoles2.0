@@ -13,7 +13,6 @@ div.bhoechie-tab-container{
   border-radius: 4px;
   -moz-border-radius: 4px;
   border:1px solid #ddd;
-  margin-top: 20px;
   margin-left: 5px;
   -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
@@ -35,7 +34,7 @@ div.bhoechie-tab-menu div.list-group>a{
 }
 div.bhoechie-tab-menu div.list-group>a .glyphicon,
 div.bhoechie-tab-menu div.list-group>a .fa {
-  color: #5A55A3;
+  color: #18BC9C;
 }
 div.bhoechie-tab-menu div.list-group>a:first-child{
   border-top-right-radius: 0;
@@ -48,8 +47,8 @@ div.bhoechie-tab-menu div.list-group>a:last-child{
 div.bhoechie-tab-menu div.list-group>a.active,
 div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
 div.bhoechie-tab-menu div.list-group>a.active .fa{
-  background-color: #5A55A3;
-  background-image: #5A55A3;
+  background-color: #18BC9C;
+  background-image: #18BC9C;
   color: #ffffff;
 }
 div.bhoechie-tab-menu div.list-group>a.active:after{
@@ -61,7 +60,7 @@ div.bhoechie-tab-menu div.list-group>a.active:after{
   border-left: 0;
   border-bottom: 13px solid transparent;
   border-top: 13px solid transparent;
-  border-left: 10px solid #5A55A3;
+  border-left: 10px solid #18BC9C;
 }
 
 div.bhoechie-tab-content{
