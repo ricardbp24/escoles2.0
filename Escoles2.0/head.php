@@ -15,8 +15,16 @@
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript">
 		$(document).ready(function() {
-			$('dropdown-menu').find('form').click(function(e) {
-				e.stopPropagation();
-			});
+        $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+          e.preventDefault();
+          $(this).siblings('a.active').removeClass("active");
+          $(this).addClass("active");
+          var index = $(this).index();
+          $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+          $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+        $('dropdown-menu').find('form').click(function(e) {
+           e.stopPropagation();
+        });
 		});
     </script>
