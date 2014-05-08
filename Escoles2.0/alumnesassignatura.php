@@ -1,7 +1,9 @@
 <head><script>
-		function calcular() {
+		function guardar() {
 			var guardar = document.getElementById("guardar").value;
-			
+			var primer = document.getElementById("primer").value;
+                        var segon = document.getElementById("segon").value;
+                        var tercer = document.getElementById("tercer").value;
 			if (window.XMLHttpRequest)
 			  {// code for IE7+, Firefox, Chrome, Opera, Safari
 			  xmlhttp=new XMLHttpRequest();
@@ -19,7 +21,7 @@
     				}
   			};
 			
-			xmlhttp.open("GET","guardarnota.php?q="+guardar,true);
+			xmlhttp.open("GET","guardarnota.php?g="+guardar,true);
 			xmlhttp.send();
 		}
 	</script></head>
@@ -42,10 +44,10 @@ $q=$_REQUEST["q"];
     <tr>  
         <td><?php echo $row['Nom'] ; ?></td>
         <td><?php echo $row['Cognom1']." ".$row['Cognom2']; ?></td>
-        <td><input class="form-control input-sm" value="<?php echo $row['1T'] ; ?>" /></td>
-        <td><input class="form-control input-sm" value="<?php echo $row['2T'] ; ?>"/></td>
-        <td><input class="form-control input-sm" value="<?php echo $row['3T'] ; ?>"/></td>
-        <td><button  type="text" id="guardar" onclick="" value="<?php echo $row['ID'];?>"/>guardar</button><div id="notes"></div></td>
+        <td><input class="form-control input-sm" id="primer" value="<?php echo $row['1T'] ; ?>" /></td>
+        <td><input class="form-control input-sm" id="segon" value="<?php echo $row['2T'] ; ?>"/></td>
+        <td><input class="form-control input-sm" id="tercer" value="<?php echo $row['3T'] ; ?>"/></td>
+        <td><button  type="text" id="guardar" onclick="guardar()" value="<?php echo $row['ID'];?>"/>guardar</button><div id="mostrar"></div></td>
     </tr>
 
     <?php
