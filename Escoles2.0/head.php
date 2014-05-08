@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-  ob_start();
-  session_start();
+    ob_start();
+    @session_start();
 ?>
 <html>
 <head>
@@ -19,4 +19,4 @@
 				e.stopPropagation();
 			});
 		});
-	</script>
+    </script>

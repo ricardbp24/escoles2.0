@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 /**
  * Classe Assignatura
  * 
@@ -57,5 +57,22 @@ class  assignatura{
         $this->preu = $preu;
     }
     
+    function mostrarassignatura(){
+        require_once 'connexio.php';
+        $bd = new connexio();
+        
+        $sql="SELECT * FROM Assignatures WHERE Professor = ".$_SESSION['id'];
+        echo $sql;
+        $base = $bd->query($sql);
+        while($file = $base->fetch_object()){      
+?>    
+<option  value="<?php echo $file->ID;?>"><?php echo utf8_encode($file->Assignatura); ?></option>
+<?php   
+   
+        }
+        $bd->close();
+    }
+        
+
 }
 
