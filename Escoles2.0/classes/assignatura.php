@@ -62,7 +62,7 @@ class  assignatura{
         $bd = new connexio();
         
         $sql="SELECT * FROM Assignatures WHERE Professor = ".$_SESSION['id'];
-        echo $sql;
+      
         $base = $bd->query($sql);
         while($file = $base->fetch_object()){      
 ?>    

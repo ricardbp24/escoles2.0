@@ -17,9 +17,9 @@ $q=$_REQUEST["q"];
     <tr>  
         <td><?php echo $row['Nom'] ; ?></td>
         <td><?php echo $row['Cognom1']." ".$row['Cognom2']; ?></td>
-        <td><input class="form-control input-sm" id="primer<?php echo $row['IDNOTA'];?>" value="<?php echo $row['1T'] ; ?>" /></td>
-        <td><input class="form-control input-sm" id="segon<?php echo $row['IDNOTA'];?>" value="<?php echo $row['2T'] ; ?>"/></td>
-        <td><input class="form-control input-sm" id="tercer<?php echo $row['IDNOTA'];?>" value="<?php echo $row['3T'] ; ?>"/></td>
+        <td><input class="form-control" id="primer<?php echo $row['IDNOTA'];?>" value="<?php echo $row['1T'] ; ?>" /></td>
+        <td><input class="form-control" id="segon<?php echo $row['IDNOTA'];?>" value="<?php echo $row['2T'] ; ?>"/></td>
+        <td><input class="form-control" id="tercer<?php echo $row['IDNOTA'];?>" value="<?php echo $row['3T'] ; ?>"/></td>
         <td><button class="btn btn-primary"  id="guardar" onclick="guardar(<?php echo $row['IDNOTA'];?>)"/>guardar</button></td><td id="mostrar<?php echo $row['IDNOTA'];?>"></td>
     </tr>
 
