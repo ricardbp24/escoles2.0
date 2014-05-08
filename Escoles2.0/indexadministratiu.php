@@ -1,0 +1,72 @@
+<?php require_once 'head.php';?>
+</head>
+<body>
+    <div class="container">
+    	<div class="row">
+        <div class="col-md-12 bhoechie-tab-container">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
+              <div class="list-group">
+                <a href="#" class="list-group-item active text-center">
+                  <h4 class="glyphicon glyphicon-pencil"></h4><br/>Posar Notes
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="glyphicon glyphicon-list-alt"></h4><br/>Faltes d'assistència
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h4 class="glyphicon glyphicon-font"></h4><br/>Anotacions
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                <!-- Posar Notes -->
+                <div class="bhoechie-tab-content active">
+                    <center>
+                      <div class="col-xs-3">
+                      Curs professor
+                      <select class="form-control input-sm" name="assignatura" id="assignatura" onchange="calcular()">
+                          <?php 
+                          require_once 'classes/assignatura.php';
+                          $assignatura = new assignatura();
+                          $assignatura->mostrarassignatura();
+                          ?>
+                      </select>
+                      
+                      </div>
+                        <h1 style="margin-top: 0;color:#55518a">Posar Notes</h1>
+                      <h3 style="margin-top: 0;color:#55518a">Alumnes</h3>
+                      
+                      <table class="table table-striped table-hover " id="alumne">
+                          
+                          
+                      </table>
+                      
+                      
+                       
+                     
+                    </center>
+                </div>
+                <!-- Faltes d'assistència -->
+                <div class="bhoechie-tab-content">
+                    <center>
+                      <h1 class="glyphicon glyphicon-road" style="font-size:12em;color:#55518a"></h1>
+                      <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
+                      <h3 style="margin-top: 0;color:#55518a">Train Reservation</h3>
+                    </center>
+                </div>
+                
+                <!-- Anotacions -->
+                <div class="bhoechie-tab-content">
+                    <center>
+                      <h1 class="glyphicon glyphicon-road" style="font-size:12em;color:#55518a"></h1>
+                      <h2 style="margin-top: 0;color:#55518a">Cooming Soon2</h2>
+                      <h3 style="margin-top: 0;color:#55518a">Train Reservation</h3>
+                    </center>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>    
+    
+</body>
+</html>
