@@ -23,6 +23,37 @@
 			xmlhttp.open("GET","alumnesassignatura.php?q="+assignatura,true);
 			xmlhttp.send();
 		}
+                function guardar(id) {
+			var guardar = id;
+                        var a = "primer" + id;
+                        var b = "segon" + id;
+                        var c = "tercer" + id;
+                        var d = "mostrar" +id;
+			var primer = document.getElementById(a).value;
+                        var segon = document.getElementById(b).value;
+                        var tercer = document.getElementById(c).value;
+                       
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			
+			xmlhttp.onreadystatechange=function()
+  			{
+  				if (xmlhttp.readyState===4 && xmlhttp.status===200)
+    				{
+                                    
+    					document.getElementById(d).innerHTML = xmlhttp.responseText;
+    				}
+  			};
+			
+			xmlhttp.open("GET","guardarnota.php?g="+guardar+"&primer="+primer+"&segon="+segon+"&tercer="+tercer,true);
+			xmlhttp.send();
+		}
 	</script>
 </head>
 <body onload="calcular()">
@@ -60,7 +91,7 @@
                         <h1 style="margin-top: 0;color:#55518a">Posar Notes</h1>
                       <h3 style="margin-top: 0;color:#55518a">Alumnes</h3>
                       
-                      <table class="table table-striped table-hover " id="alumne">
+                      <table class="table table-striped table-hover table-responsive" id="alumne">
                           
                           
                       </table>
