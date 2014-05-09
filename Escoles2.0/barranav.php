@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand">Escoles 2.0</a>
+         <a class="navbar-brand"><b>Escoles 2.0</b></a>
         </div>
     <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">

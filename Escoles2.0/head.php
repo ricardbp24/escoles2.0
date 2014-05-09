@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
   <script src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
   <script type="text/javascript">
 		$(document).ready(function() {
         $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
@@ -26,5 +26,8 @@
         $('dropdown-menu').find('form').click(function(e) {
            e.stopPropagation();
         });
+        $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
 		});
     </script>

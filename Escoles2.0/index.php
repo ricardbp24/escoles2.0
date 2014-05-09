@@ -1,12 +1,11 @@
 <?php include 'head.php'; ?>
   <script type="text/javascript">
     $(document).ready(function(){
-      var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=8dfe6f1b310f7a5694c68de8c12d4703&tags=delta+del+ebre&safe_search=1&format=json&per_page=30&jsoncallback=?";
+      var url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=d51a852e16430fb26b78b3435cb48df0&tags=delta+del+ebre&safe_search=1&format=json&per_page=50&jsoncallback=?";
       var src;
-      var id = random = Math.ceil(Math.random() * 30) + 1;
+      var id = random = Math.ceil(Math.random() * 50) + 1;
       $.getJSON(url, function(data){
               src = "http://farm"+ data.photos.photo[id].farm +".static.flickr.com/"+ data.photos.photo[id].server +"/"+ data.photos.photo[id].id +"_"+ data.photos.photo[id].secret +"_c.jpg";
-              alert(src);
               $("<img/>").attr("src", src).appendTo("#fullscreen_bg");
               if ( i == 3 ) return false;
       });
