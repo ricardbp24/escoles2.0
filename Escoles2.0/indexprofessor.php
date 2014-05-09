@@ -1,4 +1,5 @@
 <?php require_once 'head.php';?>
+
 <script>
 		function calcular() {
 			var assignatura = document.getElementById("assignatura").value;
@@ -100,7 +101,8 @@
             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
                 <!-- Posar Notes -->
                 <div class="bhoechie-tab-content active">
-                    <center>
+                    <h1 style="margin-top: 0;color:#55518a">Posar Notes Alumnes</h1>
+                      
                       <div class="col-xs-3">
                       Assignatura
                       <select class="form-control input-sm" name="assignatura" id="assignatura" onchange="calcular()">
@@ -110,23 +112,22 @@
                           $assignatura->mostrarassignatura();
                           ?>
                       </select>
-                      
+                        <br>
                       </div>
-                      <h1 style="margin-top: 0;color:#55518a">Posar Notes</h1>
-                      <h3 style="margin-top: 0;color:#55518a">Alumnes</h3>
-                      
+                   
                       <table on class="table table-striped table-hover table-responsive" id="alumne">
                             
                       </table>
-
-                    </center>
+                    
+                    
                 </div>
                 <!-- Faltes d'assistència -->
                 <div class="bhoechie-tab-content">
-                    <center>
+                    
+                        <h1 style="margin-top: 0;color:#55518a">Faltes Assistència Alumnes</h1>
                     <div class="col-xs-3">
                       Assignatura
-                      <select class="form-control input-sm" name="assignatura" id="buscar" onchange="buscaralum()">
+                      <select class="form-control" name="assignatura" id="buscar" onchange="buscaralum()">
                           <?php 
                           require_once 'classes/assignatura.php';
                           $assignatura = new assignatura();
@@ -134,18 +135,34 @@
                           ?>
                       </select>   
                     </div>
-                      <h1 style="margin-top: 0;color:#55518a">Faltes Assistència</h1>
-                      <h3 style="margin-top: 0;color:#55518a">Alumnes</h3>
+                        
                     <div class="col-xs-3">  
                       Alumnes
-                      <select class="form-control input-sm" id="alumnerecerca" name="alumnerecerca">
+                      <select class="form-control" id="alumnerecerca" name="alumnerecerca">
                     
                       </select>
                     </div>      
-                      
-                      <input type="date" name="data" />
+                    <div class="col-xs-3">
+                        Data
+                    <div class="input-group date">
+                        <input type="text" class="form-control">
+                        <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i></span>
+                    </div>
 
-                    </center>
+                    <script src="js/bootstrap-datepicker.js"></script>
+                    <script>
+                    $('.input-group.date').datepicker({
+                    format: "yyyy/mm/dd",
+                    startDate: "2012-01-01",
+                    endDate: "2015-01-01",
+                    todayBtn: "linked",
+                    autoclose: true,
+                    todayHighlight: true
+                    });
+                    </script>
+                    </div>
+                   
                 </div>
                 
                 <!-- Anotacions -->

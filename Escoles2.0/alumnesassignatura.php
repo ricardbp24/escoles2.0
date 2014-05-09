@@ -10,7 +10,7 @@ $q=$_REQUEST["q"];
 					
 	$bd = new connexio();
 	$temp = $bd->query($sql);
-        echo '<tr><th>Nom</th><th>Cognoms</th><th>1 Trimestre</th><th>2 Trimestre</th><th>3 Trimestre</th><th></th></tr>';
+        echo '<tr><th>Nom</th><th>Cognoms</th><th>1 Trimestre</th><th>2 Trimestre</th><th>3 Trimestre</th><th>Guardar</th><th class="glyphicon glyphicon-refresh"></th></tr>';
 	while ($row = $temp->fetch_array(MYSQLI_ASSOC)) {
              
     ?>
