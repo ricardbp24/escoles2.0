@@ -252,4 +252,19 @@ class nouAlumne extends alumne {
     $this->persona_contacte = $pc;
     $this->alta = 1;
   }
+  
+  public function insertar() {
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("INSERT INTO Alumnes (Nom,Cognom1,Cognom2,Data_Naixement,Telefon1,Telefon2,DNI,Carrer,Codi_Postal,Poblacio,Correu_Electronic,Foto,Persona_Contacte,Compte_Corrent,Alta_Baixa) VALUES ('$this->nom','$this->cognom1','$this->cognom2','$this->data_naixement','$this->telefon1','$this->telefon2','$this->dni','$this->carrer','$this->codi_postal','$this->poblacio','$this->correu_electronic','$this->foto','$this->persona_contacte','$this->compte_corrent',$this->alta)");
+    echo $sql;
+    if ($bd->query($sql)) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    
+    $bd->close();
+  }
 }

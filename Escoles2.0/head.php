@@ -23,8 +23,8 @@
           $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
           $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
         });
-        /* $('dropdown-menu').find('form').click(function(e) {
+        $('dropdown-menu').find('form').click(function(e) {
            e.stopPropagation();
-        }); */
+        });
 		});
     </script>
