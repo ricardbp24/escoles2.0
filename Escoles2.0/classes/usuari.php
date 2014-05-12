@@ -245,6 +245,21 @@ class alumne extends usuari {
   public function setPresonacontacte($pc) {
     $this->persona_contacte = $pc;
   }
+  
+  public function actualitzar() {
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Alumnes SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Persona_Contacte='".$this->persona_contacte."',Compte_Corrent='".$this->compte_corrent."',Alta_Baixa=".$this->getAlta()." WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    
+    $bd->close();
+  }
 }
 
 class nouAlumne extends alumne {
@@ -282,4 +297,5 @@ class nouAlumne extends alumne {
     
     $bd->close();
   }
+  
 }

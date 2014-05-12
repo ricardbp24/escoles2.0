@@ -201,7 +201,7 @@
                       <td><?php echo utf8_encode($alumne['Cognom1']); ?></td>
                       <td><?php echo utf8_encode($alumne['Cognom2']); ?></td>
                       <td><?php echo utf8_encode($alumne['DNI']); ?></td>
-                      <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificaalum.php/?a=<?php echo $alumne['ID'] ?>'">Modificar</button></td>
+                      <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificaalum.php?a=<?php echo $alumne['ID'] ?>'">Modificar</button></td>
                     </tr>
                       <?php $i++; } $bd->close(); ?>
                   </tbody>
