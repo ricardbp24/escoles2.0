@@ -184,29 +184,44 @@ class nouProfessor extends professor {
 class administratiu extends usuari {
   function __construct($dni) {
     parent::__construct();
+
     $this->dni = $dni;
   }
 }
 
 class nouAdministratiu extends administratiu {
-  function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
+  function __construct($nom,$c1,$c2,$dn,$t1,$t2,$dni,$carrer,$cp,$p,$poblacio,$ae,$foto,$tipus) {
     parent::__construct($dni);
-    $this->nom = $nom;
-    $this->cognom1 = $c1;
-    $this->cognom2 = $c2;
-    $this->data_naixement = $dn;
-    $this->password = $p;
-    $this->telefon1 = $t1;
-    $this->telefon2 = $t2;
-    $this->carrer = $carrer;
-    $this->codi_postal = $cp;
-    $this->poblacio = $poblacio;
+    $this->nom               = $nom;
+    $this->cognom1           = $c1;
+    $this->cognom2           = $c2;
+    $this->data_naixement    = $dn;
+    $this->password          = $p;
+    $this->telefon1          = $t1;
+    $this->telefon2          = $t2;
+    $this->carrer            = $carrer;
+    $this->codi_postal       = $cp;
+    $this->poblacio          = $poblacio;
     $this->correu_electronic = $ae;
-    $this->foto = $foto;
-    $this->tipus = 3;
-    $this->alta = 1;
+    $this->foto              = $foto;
+    $this->tipus             = $tipus;
+    $this->alta              = 1;
+  }
+  public function insertarUsuari(){
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("INSERT INTO Usuaris (Nom,Cognom1,Cognom2,Data_Naixement,Telefon1,Telefon2,DNI,Password,Carrer,Codi_Postal,Poblacio,Correu_Electronic,Foto,Tipus,Alta_Baixa) VALUES ('$this->nom','$this->cognom1','$this->cognom2','$this->data_naixement','$this->telefon1','$this->telefon2','$this->dni','$this->password','$this->carrer','$this->codi_postal','$this->poblacio','$this->correu_electronic','$this->foto','$this->tipus','$this->alta')");
+    if ($bd->query($sql)) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+    
+    $bd->close();
   }
 }
+
 
 class alumne extends usuari {
   private $compte_corrent;
