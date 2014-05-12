@@ -2,19 +2,19 @@
 ob_start();
 require_once 'classes/usuari.php';
 
-$nom = filter_input(INPUT_POST,'nom');
-$c1 = filter_input(INPUT_POST,'cognom1');
-$c2 = filter_input(INPUT_POST,'cognom2');
-$data = filter_input(INPUT_POST,'data');
-$t1 = filter_input(INPUT_POST,'telefon1');
-$t2 = filter_input(INPUT_POST,'telefon2');
-$dni = filter_input(INPUT_POST,'dni');
-$direccio = filter_input(INPUT_POST,'direccio');
-$cp = filter_input(INPUT_POST,'cp');
-$p = filter_input(INPUT_POST,'poblacio');
-$ae = filter_input(INPUT_POST,'ae');
-$pc = filter_input(INPUT_POST,'contacte');
-$ccc = filter_input(INPUT_POST,'ccc');
+$nom = utf8_decode(filter_input(INPUT_POST,'nom'));
+$c1 = utf8_decode(filter_input(INPUT_POST,'cognom1'));
+$c2 = utf8_decode(filter_input(INPUT_POST,'cognom2'));
+$data = utf8_decode(filter_input(INPUT_POST,'data'));
+$t1 = utf8_decode(filter_input(INPUT_POST,'telefon1'));
+$t2 = utf8_decode(filter_input(INPUT_POST,'telefon2'));
+$dni = utf8_decode(filter_input(INPUT_POST,'dni'));
+$direccio = utf8_decode(filter_input(INPUT_POST,'direccio'));
+$cp = utf8_decode(filter_input(INPUT_POST,'cp'));
+$p = utf8_decode(filter_input(INPUT_POST,'poblacio'));
+$ae = utf8_decode(filter_input(INPUT_POST,'ae'));
+$pc = utf8_decode(filter_input(INPUT_POST,'contacte'));
+$ccc = utf8_decode(filter_input(INPUT_POST,'ccc'));
 
 define('ruta',$_SERVER['DOCUMENT_ROOT'].'/fotos/');
 
