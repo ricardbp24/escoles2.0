@@ -9,7 +9,7 @@ $tercer=$_REQUEST["tercer"];
     
     
     if($bd->query("UPDATE Notes SET 1T = $primer , 2T = $segon , 3T = $tercer  WHERE ID = $g ")){
-        echo "<span class='glyphicon glyphicon-ok'></span>";
+        echo "<span style='color: #18bc9c;' class='glyphicon glyphicon-ok'></span>";
     } else {
 	echo "Error: %s\n", $bd->error;
     }

@@ -1,12 +1,25 @@
 <?php
+    session_start();
+    require_once('classes/assistencia.php');
+    
+    $idal = $_POST['al'];
+    $idprofessor = $_SESSION['id'];
+    $idassig = $_POST['assignatura'];
+    $data=$_POST['data'];
+    //var_dump($idalumne);
+    
+    
 
-	require_once('classes/connexio.php');
-					
-	$bd = new connexio();
-	if ($bd->query('INSERT INTO Assistencia (IDAlumnes,IDProfessor,IDAssignatura,DAta) VALUES 
-        ('.$alum.','.$prof.','.$assign.','.$data.')')){
-            echo "SI";
-    } else {
-            echo "Error: %s\n", $bd->error;
+    
+   
+    foreach ($idal as $idalumne) {
+        
+        $assistencia = new assistencia($idalumne,$idprofessor,$idassig,$data);
+        if ($assistencia->insertardata()){
+        echo "Realitzat";
+        }  
     }
-    $bd->close();
+
+
+       
+ 
