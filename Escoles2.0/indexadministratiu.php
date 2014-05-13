@@ -198,7 +198,7 @@
                     <input type="text" class="form-control" name="ccc" placeholder="Compte corrent" required>
                   </div>
                   <div class="clearfix"></div>
-                  <button type="submit" class="btn btn-info">Crear Alumne</button>
+                  <button type="submit" class="btn btn-success">Crear Alumne</button>
                   <div class="clearfix"></div>
                   <div class="form-group col-md-12"></div>
                 </form>
