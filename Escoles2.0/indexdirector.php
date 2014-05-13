@@ -128,7 +128,7 @@
                   </div>
                   <div class="form-group col-md-4">
                   	<label for="tipus" class="sr-only">Tipus usuari</label>
-                  	<select name="tipus" >
+                  	<select name="tipus" class="form-control">
                   		<?php
                   			require_once("classes/tipususuari.php");
                   			$tipus = new tipususuari();
