@@ -3,6 +3,10 @@
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
 <script type="text/javascript">
+  $(function() {
+    $(".multiselect").multiselect();
+  });
+  
   function paginar(numpagina) {
     if (window.XMLHttpRequest)
       {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -46,7 +50,46 @@
     xmlhttp2.open("GET","filtratalumne.php?c="+criteri,true);
     xmlhttp2.send();
   }
+  
+  jQuery.fn.multiselect = function() {
+    $(this).each(function() {
+        var checkboxes = $(this).find("input:checkbox");
+        checkboxes.each(function() {
+            var checkbox = $(this);
+            // Highlight pre-selected checkboxes
+            if (checkbox.prop("checked"))
+                checkbox.parent().addClass("multiselect-on");
+ 
+            // Highlight checkboxes that the user selects
+            checkbox.click(function() {
+                if (checkbox.prop("checked"))
+                    checkbox.parent().addClass("multiselect-on");
+                else
+                    checkbox.parent().removeClass("multiselect-on");
+            });
+        });
+    });
+  };
 </script>
+<style>
+  .multiselect {
+    width:20em;
+    height:15em;
+    border:solid 1px #c0c0c0;
+    overflow:auto;
+    padding: 10px 10px 10px 10px;
+    border-radius: 5px;
+  }
+
+  .multiselect label {
+      display:block;
+  }
+
+  .multiselect-on {
+      color:#ffffff;
+      background-color:#0FD8B0;
+  }
+</style>
 </head>
 <body>
   <?php require_once 'barranav.php';?>
@@ -78,10 +121,10 @@
                 if (isset($_SESSION['nouusuari'])) { ?>
                 <div class="alert alert-warning alert-dismissable">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <strong>Alumne creat correctament!</strong>
+                  <strong>Alumne/a creat correctament!</strong>
                 </div>
                 <?php unset($_SESSION['nouusuari']) ;} ?> 
-                <h3>Nou alumne</h3>
+                <h3>Nou alumne/a</h3>
                 <form class="form" role="form" method="post" action="insertaralum.php" enctype="multipart/form-data">
                   <div class="form-group col-md-4">
                     <label class="sr-only" for="nom">Nom</label>
@@ -161,7 +204,6 @@
                 </form>
               </center>
               </div>
-
               <!-- Modificar alumnes -->
               <div class="bhoechie-tab-content">
                 <center>
@@ -193,10 +235,10 @@
                       if (($totalfiles % $perpagina)>0) {
                         $totalpagines++;
                       }
-                      $consulta2 = $bd->query("SELECT ID,Nom,Cognom1,Cognom2,DNI FROM Alumnes ORDER BY Cognom1,Cognom2,Nom LIMIT $perpagina");
+                      $consulta2 = $bd->query("SELECT ID,Nom,Cognom1,Cognom2,DNI,Alta_Baixa FROM Alumnes ORDER BY Cognom1,Cognom2,Nom LIMIT $perpagina");
                       $i=1;
                       while ($alumne = $consulta2->fetch_array(MYSQLI_ASSOC)) { ?>
-                    <tr>
+                    <tr <?php if ($alumne['Alta_Baixa'] == 0) { echo 'class="warning"'; } ?>>
                       <td><?php echo utf8_encode($alumne['Nom']); ?></td>
                       <td><?php echo utf8_encode($alumne['Cognom1']); ?></td>
                       <td><?php echo utf8_encode($alumne['Cognom2']); ?></td>
@@ -218,9 +260,46 @@
 
               <!-- Matricular -->
               <div class="bhoechie-tab-content">
+                <center>
+                  <h3>Matriculació d'alumnes</h3>
+                </center>
+                <form class="form" role="form" method="post" action="matricular.php">
+                <?php
+                  include_once 'classes/connexio.php';
+                  $bd = new connexio();
+                  $llista_alumnes = $bd->query("SELECT ID,Nom,Cognom1,Cognom2 FROM Alumnes WHERE Alta_Baixa=1 ORDER BY Cognom1,Cognom2,Nom"); ?>
+                  <div class="multiselect form-group col-md-4">
+                    <?php while ($fila = $llista_alumnes->fetch_array(MYSQLI_ASSOC)) { ?>
+                    <label><input type="checkbox" name="alumnematricula[]" value="<?php echo $fila['ID']; ?>" /><?php echo utf8_encode($fila['Nom']." ".$fila['Cognom1']." ".$fila['Cognom2']); ?></label>
+                    <?php } $bd->close(); ?>
+                  </div>
+                <?php
+                  include_once 'classes/connexio.php';
+                  $bd = new connexio();
+                  $llista_assignatures = $bd->query("SELECT ID,Assignatura FROM Assignatures ORDER BY Assignatura"); ?>
+                  <div class="multiselect form-group col-md-offset-1 col-md-4">
+                    <?php while ($fila = $llista_assignatures->fetch_array(MYSQLI_ASSOC)) { ?>
+                    <label><input type="checkbox" name="assignaturamatricula[]" value="<?php echo $fila['ID']; ?>" /><?php echo utf8_encode($fila['Assignatura']); ?></label>
+                    <?php } $bd->close(); ?>
+                  </div>
+                <?php
+                  include_once 'classes/connexio.php';
+                  $bd = new connexio();
+                  $llista_cursos = $bd->query("SELECT ID,Curs FROM Cursos ORDER BY Curs DESC"); ?>
+                  <div class="form-group col-md-offset-1 col-md-3">
+                    <select class="form-control" name="curs">
+                      <?php while ($fila = $llista_cursos->fetch_array(MYSQLI_ASSOC)) { ?>
+                      <option value="<?php echo $fila['ID']; ?>"><?php echo utf8_encode($fila['Curs']); ?></option>
+                      <?php } $bd->close(); ?>
+                    </select>
+                  </div>
                   <center>
-
+                  <div class="clearfix"></div>
+                  <button type="submit" class="btn btn-success">Matricular</button>
                   </center>
+                  <div class="clearfix"></div>
+                  <div class="form-group col-md-12"></div>
+                </form>
               </div>
 
               <!-- Comptabilitat -->

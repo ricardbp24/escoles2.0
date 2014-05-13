@@ -14,24 +14,23 @@ class matricula {
     private $curs;
     
     
-    function __construct() {
-        
+    function __construct($al,$as,$c) {
+      $this->idalumne = $al;
+      $this->idassignatura = $as;
+      $this->curs = $c;
     }
     
     //Get
     public function getId() {
-        return $this->id;
-        
+        return $this->id;        
     }
     
     public function getIdalumne() {
-        return $this->idalumne;
-        
+        return $this->idalumne;        
     }
     
     public function getIdassignatura() {
         return $this->idassignatura;
-        
     }
     
     public function getCurs() {
@@ -42,7 +41,16 @@ class matricula {
     
     public function setCurs($curs) {
         $this->curs = $curs;
-        
+    }
+    
+    public function insertar() {
+      require_once 'connexio.php';
+      $bd = new connexio;
+      if ($bd->query("INSERT INTO Matricules (IDAlumne,IDAssignatura,Curs) VALUES ($this->idalumne,$this->idassignatura,$this->curs)")) {
+        return TRUE;
+      } else {
+        return FALSE;
+      }
     }
 
 }
