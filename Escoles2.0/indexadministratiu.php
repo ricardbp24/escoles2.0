@@ -1,4 +1,4 @@
-<?php require_once 'head.php';?>
+<?php require_once 'head2.php';?>
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
@@ -304,9 +304,57 @@
 
               <!-- Comptabilitat -->
               <div class="bhoechie-tab-content">
-                  <center>
-
-                  </center>
+                <div class="col-md-12">
+                  <form role="form" class="form" method="post">
+                    <div class="form-group col-md-4 ">
+                      <select class="form-control" name="mes">
+                        <option value="1">Gener</option>
+                        <option value="2">Febrer</option>
+                        <option value="3">Març</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maig</option>
+                        <option value="6">Juny</option>
+                        <option value="7">Juliol</option>
+                        <option value="8">Agost</option>
+                        <option value="9">Setembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Novembre</option>
+                        <option value="12">Desembre</option>                                               
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-success" onclick="this.form.action='remesar.php'">Remesar</button>
+                    <button type="submit" class="btn btn-success" onclick="this.form.action='facturar.php'">Facturar</button>
+                  </form>
+                  <div class="col-md-12" id="taulapaginada">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Alumne</th>
+                          <th>Concepte</th>
+                          <th>Import</th>
+                          <th>Data</th>
+                          <th>Facturat</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                          include_once 'classes/connexio.php';
+                          $bd = new connexio();
+                          $linies = $bd->query("SELECT * FROM Assentaments");
+                          while ($linia = $linies->fetch_array(MYSQLI_ASSOC)){                            
+                        ?>
+                        <tr>                          
+                          <td><?=utf8_encode($linia['ID_Alumne'])?></td>
+                          <td><?=utf8_encode($linia['Concepte'])?></td>
+                          <td><?=utf8_encode($linia['Import'])?></td>
+                          <td><?=utf8_encode($linia['Data'])?></td>
+                          <td><?=utf8_encode($linia['Facturat'])?></td>
+                        </tr>
+                          <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
 
           </div>
