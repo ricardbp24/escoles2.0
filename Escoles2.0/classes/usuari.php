@@ -132,6 +132,17 @@ class director extends usuari {
     parent::__construct();
     $this->dni = $dni;
   }
+  public function actualitzarDirector() {
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPasswor()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) return TRUE;
+    else return FALSE;
+    
+    $bd->close();
+  }
 }
 
 class nouDirector extends director {
@@ -158,6 +169,18 @@ class professor extends usuari {
   function __construct($dni) {
     parent::__construct();
     $this->dni = $dni;
+  }
+
+  public function actualitzarProfessor() {
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPasswor()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) return TRUE;
+    else return FALSE;
+    
+    $bd->close();
   }
 }
 
@@ -187,6 +210,18 @@ class administratiu extends usuari {
 
     $this->dni = $dni;
   }
+
+  public function actualitzarAdministratiu() {
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPasswor()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) return TRUE;
+    else return FALSE;
+    
+    $bd->close();
+  }
 }
 
 class nouAdministratiu extends administratiu {
@@ -204,7 +239,7 @@ class nouAdministratiu extends administratiu {
     $this->poblacio          = $poblacio;
     $this->correu_electronic = $ae;
     $this->foto              = $foto;
-    $this->tipus             = $tipus;
+    $this->tipus             = 3;
     $this->alta              = 1;
   }
   public function insertarUsuari(){
