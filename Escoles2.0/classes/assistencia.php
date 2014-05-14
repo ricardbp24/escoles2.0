@@ -1,7 +1,3 @@
-<head>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css" media="all" />
-  
-</head>
 <?php
 
 class assistencia{
@@ -48,7 +44,7 @@ class assistencia{
         require_once('connexio.php');
 					
 	$bd = new connexio();
-        
+    $data = $this->getData();    
     $data2 = substr($data,0,10);
     $sql="SELECT * FROM Assistencia WHERE IDAlumnes = ".$this->getIDAlumne()." AND IDProfessor = ".$this->getIDProfessor()." AND IDAssignatura = ".$this->getIDAssignatura()." AND Data LIKE '$data2%' ";
     $base= $bd->query($sql);
@@ -59,18 +55,11 @@ class assistencia{
         
 	$bd->query('INSERT INTO Assistencia (IDAlumnes,IDProfessor,IDAssignatura,Data) VALUES 
         ("'.$this->getIDAlumne().'","'.$this->getIDProfessor().'","'.$this->getIDAssignatura().'","'.$this->getData().'")');
-   
+   header("Location:indexprofessor.php?correcte");
     }else{
-        $message = "Aquest alumne ja te falta";
         
-        ?>
-                
-                <div class="alert alert-danger">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-                        <span><strong>WARNING!!!: </strong> . <a href="#" class="glyphicon glyphicon-remove-sign"></a>.</span>
-		</div>
-
-<?php
+       header("Location:indexprofessor.php?error");
+   
     
     }
     $bd->close(); 
