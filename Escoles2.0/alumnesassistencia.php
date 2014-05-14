@@ -18,7 +18,7 @@ $sql = "SELECT Alumnes.ID as IDALUMNE, Nom, Cognom1, Cognom2, Notes.ID as NOTES,
     ?>
     <label>
         <input type="checkbox" value="<?php echo $row['IDALUMNE'];?>"  id="al[]" name="al[]" />
-        <?php echo utf8_encode($row['Nom']." ".$row['Cognom1']." ".$row['Cognom2']) ; ?>
+        <?php echo utf8_encode($row['Cognom1']." ".$row['Cognom2'].",  ".$row['Nom']) ; ?>
     </label>
     <?php
     }

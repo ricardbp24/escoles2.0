@@ -55,7 +55,7 @@ class assistencia{
         
 	$bd->query('INSERT INTO Assistencia (IDAlumnes,IDProfessor,IDAssignatura,Data) VALUES 
         ("'.$this->getIDAlumne().'","'.$this->getIDProfessor().'","'.$this->getIDAssignatura().'","'.$this->getData().'")');
-   header("Location:indexprofessor.php?correcte");
+         header("Location:indexprofessor.php?correcte");
     }else{
         
        header("Location:indexprofessor.php?error");
@@ -64,5 +64,26 @@ class assistencia{
     }
     $bd->close(); 
     //include_once($_SERVER['DOCUMENT_ROOT']."/indexprofessor.php");
+    }
+    
+    
+    function mostraradataassistencia(){
+        
+        require_once('connexio.php');
+        
+        $bd = new connexio();
+        
+        $base = $bd->query("SELECT * FROM Assistencia GROUP BY Data");
+        
+        while ($row = $base->fetch_object()){
+            
+            
+        ?>
+
+<option value="<?php echo $row->Data; ?>"><?php echo date('d F Y',  strtotime($row->Data)); ?></option>
+<?php
+        }
+        
+        $bd->close();
     }
 }
