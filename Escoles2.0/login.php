@@ -16,6 +16,7 @@
     $dades = $resultat->fetch_array(MYSQLI_ASSOC);
     $_SESSION['id'] = $dades['ID'];
     $_SESSION['dni'] = $dades['DNI'];
+    $_SESSION['tipus'] = $dades['Tipus'];
     switch ($dades['Tipus']) {
       case 1:
           header('Location: indexdirector.php');

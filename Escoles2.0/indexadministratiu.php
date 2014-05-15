@@ -1,4 +1,15 @@
-<?php require_once 'head.php';?>
+<?php require_once 'head.php';
+if ($_SESSION['tipus']!=3) {
+  switch ($_SESSION['tipus']) {
+      case 1:
+          header('Location: indexdirector.php');
+          break;
+      case 2:
+          header('Location: indexprofessor.php');
+          break;
+    }
+}
+?>
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
@@ -114,7 +125,7 @@
           </div>
           <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
             <!-- Crear alumnes -->  
-            <div class="bhoechie-tab-content active" id="crear">
+            <div class="bhoechie-tab-content" id="crear">
               <center>
                 <!-- alerta de si s'ha creat un alumne -->
                 <?php
@@ -322,7 +333,7 @@
                         <option value="12">Desembre</option>                                               
                       </select>
                     </div>
-                    <button type="submit" class="btn btn-success" onclick="this.form.action='remesar.php'">Remesar</button>
+                    <button type="submit" class="btn btn-success" onclick="if (confirm('Estàs segur de crear aquest remesa?')){this.form.action='remesar.php';}">Remesar</button>
                     <button type="submit" class="btn btn-success" onclick="this.form.action='facturar.php'">Facturar</button>
                   </form>
                   <div class="col-md-12" id="taulapaginada">
@@ -342,7 +353,7 @@
                         <?php
                           include_once 'classes/connexio.php';
                           $bd = new connexio();
-                          $linies = $bd->query("SELECT * FROM Assentaments");
+                          $linies = $bd->query("SELECT * FROM Assentaments ORDER BY ID DESC");
                           while ($linia = $linies->fetch_array(MYSQLI_ASSOC)){                            
                         ?>
                           <tr>                          

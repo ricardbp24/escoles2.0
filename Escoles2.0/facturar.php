@@ -9,10 +9,10 @@
 $mes = $_POST['mes'];
 require_once 'classes/assentament.php';
 
-$assentaments = new assentament();
-if ($assentaments->remesar($mes)) { ?>
+$facturar = new assentament();
+if ($facturar->facturar()) { ?>
   <div class="col-md-12 success">
-    <h1>La remesa s'ha creat correctament</h1>
+    <h1>S'ha facturat correctament</h1>
   </div>
 <?php } else { ?>
    <div class="col-md-12 success">
