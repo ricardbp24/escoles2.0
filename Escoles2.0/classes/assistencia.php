@@ -55,10 +55,10 @@ class assistencia{
         
 	$bd->query('INSERT INTO Assistencia (IDAlumnes,IDProfessor,IDAssignatura,Data) VALUES 
         ("'.$this->getIDAlumne().'","'.$this->getIDProfessor().'","'.$this->getIDAssignatura().'","'.$this->getData().'")');
-         header("Location:indexprofessor.php?correcte");
+         header("Location:indexprofessor.php?pe=1&missatge=faltes-correcte");
     }else{
         
-       header("Location:indexprofessor.php?error");
+       header("Location:indexprofessor.php?pe=1&missatge=faltes-error");
    
     
     }
@@ -75,12 +75,9 @@ class assistencia{
         
         $base = $bd->query("SELECT * FROM Assistencia GROUP BY Data");
         
-        while ($row = $base->fetch_object()){
-            
-            
+        while ($row = $base->fetch_object()){  
         ?>
-
-<option value="<?php echo $row->Data; ?>"><?php echo date('d F Y',  strtotime($row->Data)); ?></option>
+        <option value="<?php echo $row->Data; ?>"><?php echo date('d F Y',  strtotime($row->Data)); ?></option>
 <?php
         }
         

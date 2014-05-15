@@ -15,7 +15,7 @@ class anotacio {
     private $idcurs;
     private $data;
     
-    function __construct($idassignatura,$idprofessor,$idalumne,$anotacio,$idcurs,$data2) {
+    function __construct($idassignatura,$idprofessor,$idalumne,$anotacio,$idcurs,$data) {
         $this->idassignatura = $idassignatura;
         $this->idalumne = $idalumne;
         $this->idprofessor = $idprofessor;
@@ -74,6 +74,28 @@ class anotacio {
         header("Location:indexprofessor.php?correcte");
    
     $bd->close(); 
+        
+    }
+    
+    function mostraranotacions() {
+        
+        require_once('connexio.php');
+					
+	$bd = new connexio();
+        
+        $result = $bd->query("SELECT * FROM Anotacions");
+        
+        while ($file = $result->fetch_array(MYSQLI_ASSOC)) {
+        
+        ?>
+            <tr>
+                <td></td><td></td>
+            </tr>
+        <?php    
+        }
+        
+        $bd->close();
+        
         
     }
     

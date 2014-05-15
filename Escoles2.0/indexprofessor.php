@@ -1,144 +1,21 @@
-<?php require_once 'head.php';?>
+<?php require_once 'head.php';
+if ($_SESSION['tipus']!=2) {
+  switch ($_SESSION['tipus']) {
+      case 1:
+          header('Location: indexdirector.php');
+          break;
+      case 3:
+          header('Location: indexadministratiu.php');
+          break;
+    }
+}
+
+?>
 
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
-
-</head>
-<script type="text/javascript">
-    $(function() {
-    $(".multiselect").multiselect();
-    });           
-    //Buscar alumnes de l'assignatura
-    function calcular() {
-            var assignatura = document.getElementById("assignatura").value;
-            var curs = document.getElementById("curs").value;
-
-            if (window.XMLHttpRequest)
-              {// code for IE7+, Firefox, Chrome, Opera, Safari
-              xmlhttp=new XMLHttpRequest();
-              }
-            else
-              {// code for IE6, IE5
-              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-              }
-
-            xmlhttp.onreadystatechange=function()
-            {
-                    if (xmlhttp.readyState===4 && xmlhttp.status===200)
-                    {
-                            document.getElementById("alumne").innerHTML = xmlhttp.responseText;
-                    }
-            };
-
-            xmlhttp.open("GET","alumnesassignatura.php?q="+assignatura+"&c="+curs,true);
-            xmlhttp.send();
-    }
-    //Guardar notes Trimestres
-    function guardar(id) {
-            var guardar = id;
-            var a = "primer" + id;
-            var b = "segon" + id;
-            var c = "tercer" + id;
-            var d = "mostrar" +id;
-            var primer = document.getElementById(a).value;
-            var segon = document.getElementById(b).value;
-            var tercer = document.getElementById(c).value;
-
-            if (window.XMLHttpRequest)
-              {// code for IE7+, Firefox, Chrome, Opera, Safari
-              xmlhttp=new XMLHttpRequest();
-              }
-            else
-              {// code for IE6, IE5
-              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-              }
-
-            xmlhttp.onreadystatechange=function()
-            {
-                    if (xmlhttp.readyState===4 && xmlhttp.status===200)
-                    {
-
-                            document.getElementById(d).innerHTML = xmlhttp.responseText;
-                    }
-            };
-
-            xmlhttp.open("GET","guardarnota.php?g="+guardar+"&primer="+primer+"&segon="+segon+"&tercer="+tercer,true);
-            xmlhttp.send();
-    }
-    //Faltes assistencia buscar alumne de  l'assignatura
-    function buscaralum() {
-            var buscar = document.getElementById("buscar").value;
-
-            if (window.XMLHttpRequest)
-              {// code for IE7+, Firefox, Chrome, Opera, Safari
-              xmlhttp=new XMLHttpRequest();
-              }
-            else
-              {// code for IE6, IE5
-              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-              }
-
-            xmlhttp.onreadystatechange=function()
-            {
-                    if (xmlhttp.readyState===4 && xmlhttp.status===200)
-                    {
-                            document.getElementById("alumnerecerca").innerHTML = xmlhttp.responseText;
-                    }
-            };
-
-            xmlhttp.open("GET","alumnesassistencia.php?b="+buscar,true);
-            xmlhttp.send();
-    }
-    
-    //Mostrar faltes alumnes
-    function mostrarfaltes() {
-            var assignatura2 = document.getElementById("assignatura").value;
-            var dataalum = document.getElementById("assignatura").value;
-            if (window.XMLHttpRequest)
-              {// code for IE7+, Firefox, Chrome, Opera, Safari
-              xmlhttp=new XMLHttpRequest();
-              }
-            else
-              {// code for IE6, IE5
-              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-              }
-
-            xmlhttp.onreadystatechange=function()
-            {
-                    if (xmlhttp.readyState===4 && xmlhttp.status===200)
-                    {
-                            document.getElementById("mostrarfaltes").innerHTML = xmlhttp.responseText;
-                    }
-            };
-
-            xmlhttp.open("GET","mostrarfaltesalum.php?assignatura="+assignatura2+"&dataalum="+dataalum,true);
-            xmlhttp.send();
-    }
-
-
-    //Check
-    jQuery.fn.multiselect = function() {
-        $(this).each(function() {
-            var checkboxes = $(this).find("input:checkbox");
-            checkboxes.each(function() {
-                var checkbox = $(this);
-                // Highlight pre-selected checkboxes
-                if (checkbox.prop("checked"))
-                    checkbox.parent().addClass("multiselect-on");
-
-                // Highlight checkboxes that the user selects
-                checkbox.click(function() {
-                    if (checkbox.prop("checked"))
-                        checkbox.parent().addClass("multiselect-on");
-                    else
-                        checkbox.parent().removeClass("multiselect-on");
-                });
-            });
-        });
-    };
-             
-	</script>
+<script type="text/javascript" src="js/ajaxprofessor.js"></script>
 <style>
   .multiselect {
     width:20em;
@@ -159,18 +36,36 @@
   }
 </style>
 </head>
-<body onload="calcular();" >
-    <?php include_once 'barranav.php';?>
-    <?php  if(!isset($_GET['error'])){  
+<body onload="buscaralum(); calcular(); anotacionsmostrar(); canviPestanya(); " >
+    <?php include_once 'barranav.php';  
     
-    }else{
+    //Missatges
+    
+    $faltescorrecte = "Alumnes o alumnes amb falta ïntroduida";
+    $faltaerror = "ERROR! Aquest alumne/s ja tenen falta";
+    
+    if(!isset($_GET['missatge']) && $_GET['pe'] ){  
+        //No mostrar cap valor    
+    }
+    else if($_GET['missatge']== 'faltes-error'){
     ?>
-    <div class="container"><div class="alert alert-danger col-md-6 col-md-offset-3"><span class="glyphicon glyphicon-ok"></span>  ERROR!! Aquest alumne/s ja te falta aquest dia!  <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php"></a></div></div>
+    <div class="container">
+        <div class="alert alert-danger col-md-6 col-md-offset-3">
+            <span class="glyphicon glyphicon-ok"></span> <?php echo $faltaerror; ?>  
+            <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=1"></a>
+        </div>
+    </div>
     <?php
     }
-    if (!isset($_GET['correcte'])){}else{
+    else if($_GET['missatge']== 'faltes-correcte'){
+    
     ?>
-    <div class="container"><div class="alert alert-success col-md-6 col-md-offset-3"><span class="glyphicon glyphicon-ok"></span>  Alumne o alumnes amb falta introduïda  <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php"></a></div></div>
+    <div class="container">
+        <div class="alert alert-success col-md-6 col-md-offset-3">
+            <span class="glyphicon glyphicon-ok"></span>  <?php echo $faltescorrecte; ?>  
+            <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=1"></a>
+        </div>
+    </div>
     <?php
     }
     ?>
@@ -181,23 +76,23 @@
                 <!--Menú professors-->
                 <div class="list-group">
                     <!--1 Posar Notes menu-->
-                    <a href="#" class="list-group-item active text-center" onclick="calcular();">
+                    <a href="#" class="list-group-item active text-center" id="divcrear" onload="calcular();">
                         <h4 class="glyphicon glyphicon-pencil"></h4><br/>Posar Notes
                     </a>
                     <!--2 Faltes d'assistencia-->
-                    <a href="#falta" id="falta" class="list-group-item text-center"  onclick="buscaralum()">
+                    <a href="#" class="list-group-item text-center" id="divfaltes" onclick="buscaralum()">
                         <h4 class="glyphicon glyphicon-list-alt"></h4><br/>Faltes d'assistència
                     </a>
                     <!--3 Mostrar Faltes d'assistencia-->
-                    <a href="#falta" id="falta" class="list-group-item text-center"  >
+                    <a href="#"  class="list-group-item text-center" id="divmostrarfaltes" onclick="mostrarfaltes()" >
                         <h4 class="glyphicon glyphicon-flag"></h4><br/>Mostrar faltes d'assistència
                     </a>
                     <!--4 Anotacions-->
-                    <a href="#" class="list-group-item text-center" >
+                    <a href="#" class="list-group-item text-center" id="divanotacions" >
                         <h4 class="glyphicon glyphicon-font"></h4><br/>Anotacions
                     </a>
                     <!--5 Mostrar Anotacions-->
-                    <a href="#" class="list-group-item text-center" >
+                    <a href="#" class="list-group-item text-center" id="divmostraranotacions" >
                         <h4 class="glyphicon glyphicon-flag"></h4><br/>Mostrar anotacions
                     </a>
                 </div>
@@ -206,8 +101,8 @@
             <!--Contingut del menú-->
             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
                 <!-- Posar Notes -->
-                <div class="bhoechie-tab-content active">
-                    <h1 style="margin-top: 0;">Posar notes d'alumnes</h1>
+                <div class="bhoechie-tab-content active" id="crear" >
+                    <h2 style="margin-top: 0;">Posar notes d'alumnes</h2>
                       
                     <div class=" form-group col-md-3">
                         <label>Assignatura</label>
@@ -225,7 +120,7 @@
                             $bd = new connexio();
                             $llista_cursos = $bd->query("SELECT ID,Curs FROM Cursos ORDER BY Curs DESC"); ?>
                         <div class="form-group col-md-offset-1 col-md-2">
-                            Curs
+                            <label>Curs</label>
                             <select class="form-control" id="curs" name="curs" onchange="calcular()">
                                 <?php while ($fila = $llista_cursos->fetch_array(MYSQLI_ASSOC)) { ?>
                                 <option value="<?php echo $fila['ID']; ?>"><?php echo utf8_encode($fila['Curs']); ?></option>
@@ -237,8 +132,8 @@
                 <!--Final posar notes -->
                 
                 <!-- Faltes d'assistència -->
-                <div id="falta" class="bhoechie-tab-content">
-                <h1 style="margin-top: 0;">Faltes d'assistència d'alumnes</h1>    
+                <div id="faltes" class="bhoechie-tab-content" >
+                <h2 style="margin-top: 0;">Faltes d'assistència d'alumnes</h2>    
                     <form action="alumnesfalta.php" method="post">
                         <div class="col-md-3">
                             <label>Assignatura</label>
@@ -282,12 +177,12 @@
                 </div>
                 <!--Final Faltes assistencia-->
                 <!-- Mostrar Faltes d'assistència -->
-                <div id="falta" class="bhoechie-tab-content">
-                <h1 style="margin-top: 0;">Mostrar faltes d'assistència d'alumnes</h1>    
+                <div id="mostrarfaltes2" class="bhoechie-tab-content">
+                <h2 style="margin-top: 0;">Mostrar faltes d'assistència d'alumnes</h2>    
                     
                         <div class="col-md-3">
                             <label>Assignatura</label>
-                                <select class="form-control" name="assignatura" id="assignatura2" >
+                            <select class="form-control" name="assignatura" id="assignatura2" onchange="mostrarfaltes()">
                                     <?php 
                                         require_once 'classes/assignatura.php';
                                         $assignatura = new assignatura();
@@ -295,11 +190,12 @@
                                     ?>
                                 </select>   
                         </div>
+                        
                         <div class="col-md-3">
                             <label>Data</label>
-                            <select class="form-control" id="datafalta">
+                            <select class="form-control" id="datafalta" onchange="mostrarfaltes()">
                                 <?php 
-                                    require_once('classes/assistencia.php');
+                                   require_once('classes/assistencia.php');
                                    
                                     $mostrar = new assistencia($idalumne,$idprofessor,$idassignatura,$data);
                                     $mostrar->mostraradataassistencia();
@@ -312,15 +208,16 @@
                         <div class="col-md-2"><br>
                             <button class="btn btn-primary" type="submit" onclick="mostrarfaltes();"/>Mostrar faltes</button>
                         </div>
-                    
-                    <div id="mostrarfalta">
-                            
-                    </div>
+                <label>Faltes</label>
+                <table  class="table table-striped table-hover table-responsive" id="mostrarfaltes">
+                             
+                    </table>
+                
                 </div>
                 <!--Final Mostrar Faltes assistencia-->
                 <!-- Anotacions -->
-                <div class="bhoechie-tab-content">
-                <h1 style="margin-top: 0;">Anotacions d'alumnes</h1>
+                <div id="anotacions" class="bhoechie-tab-content">
+                <h2 style="margin-top: 0;">Anotacions d'alumnes</h2>
                 <form action="alumneanotacions.php" method="post"> 
                     <div class=" form-group col-md-3">
                         <label>Assignatura</label>
@@ -366,7 +263,7 @@
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                        
-                            <input type="hidden" id="data2" value="" name="data"/>
+                            <input type="hidden" id="data2" value="" name="data2"/>
                         </div>
                         <!-- script de configuració del calendari emergent -->
                         <script type="text/javascript">
@@ -393,12 +290,12 @@
                 </div>
                 <!-- Final Anotacions -->
                 <!-- Mostrar Anotacions -->
-                <div class="bhoechie-tab-content">
-                <h1 style="margin-top: 0;">Mostrar anotacions d'alumnes</h1>
-                <form action="alumneanotacions.php" method="post"> 
+                <div id="mostraranotacions" class="bhoechie-tab-content">
+                <h2 style="margin-top: 0;">Mostrar anotacions d'alumnes</h2>
+                
                     <div class=" form-group col-md-3">
                         <label>Assignatura</label>
-                        <select class="form-control" name="assignatura" id="assignatura" onchange="calcular()">
+                        <select class="form-control" name="assignatura" id="assignatura3" onchange="calcular()">
                             <?php 
                                 require_once 'classes/assignatura.php';
                                 $assignatura = new assignatura();
@@ -413,7 +310,7 @@
                     $llista_alumnes = $bd->query("SELECT ID,Nom,Cognom1,Cognom2 FROM Alumnes WHERE Alta_Baixa=1 ORDER BY Cognom1,Cognom2,Nom"); ?>
                     <div class=" form-group col-md-3">
                         <label>Alumnes</label>
-                        <select class="form-control" name="alumnes">
+                        <select class="form-control" id="alumnes3" name="alumnes">
                             <?php while ($fila = $llista_alumnes->fetch_array(MYSQLI_ASSOC)) { ?>
                                 <option value="<?php echo $fila['ID']; ?>" /><?php echo utf8_encode($fila['Nom']." ".$fila['Cognom1']." ".$fila['Cognom2']); ?>
                             <?php }?>
@@ -435,12 +332,12 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label>Data</label>
-                            <div class="input-group date calendari" data-date-format="dd MM yyyy" data-link-field="data2">
-                                <input class="form-control" type="text" value="" placeholder="Data de la falta">
+                            <div class="input-group date calendari" data-date-format="dd MM yyyy" data-link-field="data">
+                                <input class="form-control" type="text" id="data4" value="" placeholder="Data de la falta">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                        
-                            <input type="hidden" id="data2" value="" name="data"/>
+                            <input type="hidden" id="data" value="" name="dataanotacio"/>
                         </div>
                         <!-- script de configuració del calendari emergent -->
                         <script type="text/javascript">
@@ -455,20 +352,72 @@
                           });
                         </script>
                         
-                        <div class="col-md-6 ">
-                            <label>Anotació Alumne</label>
-                            <textarea style="max-width:550px;" name="anotacio" class="form-control " rows="4" cols="30" required=""> </textarea><br><br>
-                        </div> 
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Alumne</th>
+                                    <th>Anotació</th>
+                                </tr>
+                            </thead>
+                            <tbody id="anotaciomostralumnes"></tbody>
+                        </table>
                         
                         <div class="col-md-2 "><br><br>
-                            <button class="btn btn-primary" type="submit" />Anotació alumne</button>
+                            <button class="btn btn-primary" type="submit"  onclick="anotacionsmostrar()"/>Mostrar Anotació alumne</button>
                         </div>
-                    </form>
+                    
                 </div>
                 <!-- Mostrar Final Anotacions -->
             </div>
         </div>
     </div>
-</div>      
+</div>
+    <script>
+        function canviPestanya() {
+            var id = getURLParameter('pe');
+            //LINKS de a
+            document.getElementById("crear").className = document.getElementById("crear").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("faltes").className = document.getElementById("faltes").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("mostrarfaltes").className = document.getElementById("mostrarfaltes").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("anotacions").className = document.getElementById("anotacions").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("mostraranotacions").className = document.getElementById("mostraranotacions").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            //DIVS de contingut
+            document.getElementById("divcrear").className = document.getElementById("divcrear").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("divfaltes").className = document.getElementById("divfaltes").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("divmostrarfaltes").className = document.getElementById("divmostrarfaltes").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("divanotacions").className = document.getElementById("divanotacions").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("divmostraranotacions").className = document.getElementById("divmostraranotacions").className.replace(/(?:^|\s)active(?!\S)/g , '');
+
+            if (id == '0') {               
+                document.getElementById("crear").className += " active";
+                document.getElementById("divcrear").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '1') {               
+                document.getElementById("faltes").className += " active";
+                document.getElementById("divfaltes").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '2') {               
+                document.getElementById("mostrarfaltes2").className += " active";
+                document.getElementById("divmostrarfaltes").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '3') {               
+                document.getElementById("anotacions").className += " active";
+                document.getElementById("divanotacions").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '4') {               
+                document.getElementById("mostraranotacions").className += " active";
+                document.getElementById("divmostraranotacions").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            
+        }
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+          }
+    </script>
 </body>
 </html>
