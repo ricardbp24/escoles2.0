@@ -59,7 +59,7 @@ $usuari = $_REQUEST['a'];
         </div>
         <div class="form-group col-md-4">
           <label class="sr-only" for="cognom2">Segon Cognom</label>
-          <input type="text" class="form-control" name="cognom2" placeholder="Segon Cognom" required="required">
+          <input type="text" class="form-control" name="cognom2" placeholder="Segon Cognom">
         </div>
         
         <div class="form-group col-md-4">
@@ -122,12 +122,12 @@ $usuari = $_REQUEST['a'];
           }
         </script>
         <div class="form-group col-md-4">
-          <label for="password" class="sr-only">Contrasenya</label>
-          <input id="pass1" type="password" class="form-control" name="password1" placeholder="Contrasenya" required>
+          <label for="contrasenya1" class="sr-only">Contrasenya</label>
+          <input id="pass1" type="password" class="form-control" name="contrasenya1" placeholder="Contrasenya" >
         </div>
         <div class="form-group col-md-4" id="pass22">
-          <label for="password" class="sr-only">Contrasenya</label>
-          <input id="pass2" type="password" class="form-control" name="password2" placeholder="Repeteix la contrasenya" required onkeyup="comparaPass();">
+          <label for="contrasenya2" class="sr-only">Contrasenya</label>
+          <input id="pass2" type="password" class="form-control" name="contrasenya2" placeholder="Repeteix la contrasenya"  onkeyup="comparaPass();">
         </div>
         <div class="form-group col-md-4">
           <label for="tipus" class="sr-only">Tipus usuari</label>
@@ -146,7 +146,7 @@ $usuari = $_REQUEST['a'];
         </div>
         <div class="clearfix"></div>
         <div class="form-group col-md-12">
-          <button type="submit" class="btn btn-success" onclick = "this.form.action ='actualitzusuari.php'">Modificar Usuari</button>
+          <button type="submit" class="btn btn-success" onclick = "this.form.action ='actualitzausuari.php'">Modificar Usuari</button>
           <button type="submit" class="btn btn-danger" onclick="javascript:history.go(-1)">Tornar sense desar</button>
         </div>
         <div class="clearfix"></div>

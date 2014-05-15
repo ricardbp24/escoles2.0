@@ -27,10 +27,7 @@
                 <h4 class="glyphicon glyphicon-pencil"></h4><br/>Modificar Usuari
               </a>
               <a href="#" class="list-group-item text-center">
-                <h4 class="glyphicon glyphicon-list"></h4><br/>Matricular
-              </a>
-              <a href="#" class="list-group-item text-center">
-                <h4 class="glyphicon glyphicon-euro"></h4><br/>Comptabilitat
+                <h4 class="glyphicon glyphicon-list"></h4><br/>Crear Aula
               </a>
             </div>
           </div>
