@@ -144,7 +144,7 @@ class director extends usuari {
     require_once 'connexio.php';
     
     $bd = new connexio();
-    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPasswor()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
@@ -183,7 +183,7 @@ class professor extends usuari {
     require_once 'connexio.php';
     
     $bd = new connexio();
-    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPasswor()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
@@ -219,11 +219,44 @@ class administratiu extends usuari {
     $this->dni = $dni;
   }
 
-  public function actualitzarAdministratiu() {
+  public function actualitzarAdministratiuFoto(){
     require_once 'connexio.php';
     
     $bd = new connexio();
-    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPasswor()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) return TRUE;
+    else return FALSE;
+    
+    $bd->close();
+  }
+  public function actualitzarAdministratiuSinFoto(){
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) return TRUE;
+    else return FALSE;
+    
+    $bd->close();
+  }
+  public function actualitzarAdministratiuFotoIPass(){
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
+    echo $sql;
+    if ($bd->query($sql)) return TRUE;
+    else return FALSE;
+    
+    $bd->close();
+  }
+  public function actualitzarAdministratiuPass(){
+    require_once 'connexio.php';
+    
+    $bd = new connexio();
+    $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;

@@ -10,6 +10,94 @@
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
+<script type="text/javascript">
+  $(function() {
+    $(".multiselect").multiselect();
+  });
+  
+  function paginar(numpagina) {
+    if (window.XMLHttpRequest)
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+    xmlhttp.onreadystatechange=function()
+    {
+       if (xmlhttp.readyState===4 && xmlhttp.status===200)
+          {
+             document.getElementById("taulapaginada").innerHTML = xmlhttp.responseText;
+          }
+    };
+
+    xmlhttp.open("GET","paginatmodificaalumne.php?npag="+numpagina,true);
+    xmlhttp.send();
+  }
+  function filtrar() {
+    var criteri = document.getElementById("inputmodifica").value;
+    if (window.XMLHttpRequest)
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp2=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+      xmlhttp2=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+    xmlhttp2.onreadystatechange=function()
+    {
+       if (xmlhttp2.readyState===4 && xmlhttp2.status===200)
+          {
+             document.getElementById("taulapaginada").innerHTML = xmlhttp2.responseText;
+          }
+    };
+
+    xmlhttp2.open("GET","filtratusuari.php?c="+criteri,true);
+    xmlhttp2.send();
+  }
+  
+  jQuery.fn.multiselect = function() {
+    $(this).each(function() {
+        var checkboxes = $(this).find("input:checkbox");
+        checkboxes.each(function() {
+            var checkbox = $(this);
+            // Highlight pre-selected checkboxes
+            if (checkbox.prop("checked"))
+                checkbox.parent().addClass("multiselect-on");
+ 
+            // Highlight checkboxes that the user selects
+            checkbox.click(function() {
+                if (checkbox.prop("checked"))
+                    checkbox.parent().addClass("multiselect-on");
+                else
+                    checkbox.parent().removeClass("multiselect-on");
+            });
+        });
+    });
+  };
+</script>
+<style>
+  .multiselect {
+    width:20em;
+    height:15em;
+    border:solid 1px #c0c0c0;
+    overflow:auto;
+    padding: 10px 10px 10px 10px;
+    border-radius: 5px;
+  }
+
+  .multiselect label {
+      display:block;
+  }
+
+  .multiselect-on {
+      color:#ffffff;
+      background-color:#0FD8B0;
+  }
+</style>
 </head>
 <body>
   <?php require_once 'barranav.php';?>
@@ -25,10 +113,7 @@
                 <h4 class="glyphicon glyphicon-pencil"></h4><br/>Modificar Usuari
               </a>
               <a href="#" class="list-group-item text-center">
-                <h4 class="glyphicon glyphicon-list"></h4><br/>Matricular
-              </a>
-              <a href="#" class="list-group-item text-center">
-                <h4 class="glyphicon glyphicon-euro"></h4><br/>Comptabilitat
+                <h4 class="glyphicon glyphicon-list"></h4><br/>Crear Aula
               </a>
             </div>
           </div>
@@ -113,7 +198,6 @@
                   	<label for="password" class="sr-only">Contrasenya</label>
                   	<input id="pass2" type="password" class="form-control" name="password2" placeholder="Repeteix la contrasenya" required onkeyup="comparaPass();">
                   </div>
-                  
                   <div class="form-group col-md-4">
                     <label class="sr-only" for="poblacio">Població</label>
                     <input type="text" class="form-control" name="poblacio" placeholder="Població" required>
@@ -147,25 +231,81 @@
 
               <!-- Modificar Usuari -->
               <div class="bhoechie-tab-content">
-                  <center>
-
-                  </center>
+                <center>
+                  <h3>Modificació d'usuaris</h3>
+                </center>
+                <form class="form" role="form">
+                  <div class="form-group col-md-6">
+                    <input type="text" class="form-control" onkeyup="filtrar()" id="inputmodifica" placeholder="Usuari a buscar">
+                  </div>
+                </form>
+                <div class="col-md-12" id="taulapaginada">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Nom</th>
+                      <th>Primer Cognom</th>
+                      <th>Segon Cognom</th>
+                      <th>DNI/NIE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      include_once 'classes/connexio.php';
+                      $bd = new connexio();
+                      $consulta = $bd->query("SELECT ID FROM Usuaris");
+                      $totalfiles = $consulta->num_rows;
+                      $perpagina = 5;
+                      $totalpagines = $totalfiles / $perpagina;
+                      if (($totalfiles % $perpagina)>0) {
+                        $totalpagines++;
+                      }
+                      $consulta2 = $bd->query("SELECT ID,Nom,Cognom1,Cognom2,DNI,Alta_Baixa FROM Usuaris ORDER BY Cognom1,Cognom2,Nom LIMIT $perpagina");
+                      $i=1;
+                      while ($usuari = $consulta2->fetch_array(MYSQLI_ASSOC)) { ?>
+                    <tr <?php if ($usuari['Alta_Baixa'] == 0) { echo 'class="warning"'; } ?>>
+                      <td><?php echo utf8_encode($usuari['Nom']); ?></td>
+                      <td><?php echo utf8_encode($usuari['Cognom1']); ?></td>
+                      <td><?php echo utf8_encode($usuari['Cognom2']); ?></td>
+                      <td><?php echo utf8_encode($usuari['DNI']); ?></td>
+                      <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificausuari.php?a=<?php echo $usuari['ID'] ?>'">Modificar</button></td>
+                    </tr>
+                      <?php $i++; } $bd->close(); ?>
+                  </tbody>
+                </table>
+                <center>
+                  <ul class="pagination pagination-sm">
+                    <?php for ($i=1;$i<=$totalpagines;$i++) { ?>
+                    <li><a href="#" onclick="paginar(<?php echo $i; ?>)"><?php echo $i; ?></a></li>
+                    <?php } ?>
+                  </ul>
+                </center>
+                </div>      
               </div>
-
-              <!-- Matricular -->
+              <!--Afegir Aules -->
               <div class="bhoechie-tab-content">
                   <center>
-
-                  </center>
+                    <h3>Crear aula</h3>
+                    <form class="form" role="form" method="post" action="insertaula.php" enctype="multipart/form-data">
+                      <div class="form-group col-md-4">
+                        <label class="sr-only" for="nom_aula">Nom Aula</label>
+                        <input type="text" class="form-control" name="nom_aula" placeholder="Nom aula" required="required">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="sr-only" for="capacitat">Capacitat</label>
+                        <input type="text" class="form-control" name="capacitat" placeholder="Capacitat" required="required">
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="sr-only" for="planta">Planta</label>
+                        <input type="text" class="form-control" name="planta" placeholder="Planta" required="required">
+                      </div>
+                      <div class="clearfix"></div>
+                      <button type="submit" class="btn btn-info">Crear Aula</button>
+                      <div class="clearfix"></div>
+                      <div class="form-group col-md-12"></div>
+                    </form>
+                  </center>                
               </div>
-
-              <!-- Comptabilitat -->
-              <div class="bhoechie-tab-content">
-                  <center>
-
-                  </center>
-              </div>
-
           </div>
       </div>
     </div>

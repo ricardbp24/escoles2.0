@@ -13,8 +13,8 @@ $direccio = utf8_decode(filter_input(INPUT_POST,'direccio'));
 $cp = utf8_decode(filter_input(INPUT_POST,'cp'));
 $p = utf8_decode(filter_input(INPUT_POST,'poblacio'));
 $ae = utf8_decode(filter_input(INPUT_POST,'ae'));
-$pass = utf8_decode(filter_input(INPUT_POST, 'contrasenya2'));
-$tipo = utf8_decode(filter_input(INPUT_POST, 'tipo'));
+$pass = utf8_decode(filter_input(INPUT_POST,'contrasenya2'));
+$tipo = utf8_decode(filter_input(INPUT_POST,'tipo'));
 $alta = filter_input(INPUT_POST,'alta');
 
 define('ruta',$_SERVER['DOCUMENT_ROOT'].'/fotos/');
@@ -82,8 +82,28 @@ else{
 	if ($alta == "on") $usuari->setAlta(true);
 	else $usuari->setAlta(false);
 
-	if ($usuari->actualitzarAdministratiu()){
-	  move_uploaded_file($fototmp, ruta.$foto);
-	  header('Location: indexdirector.php');
-	} else echo "Error";
+	if($pass == '' and $foto!='' ){
+		if ($usuari->actualitzarAdministratiuFoto()){
+		  move_uploaded_file($fototmp, ruta.$foto);
+		  header('Location: indexdirector.php');
+		} else echo "Error1";
+	}
+	elseif($foto == '' and $pass == ''){
+		if ($usuari->actualitzarAdministratiuSinFoto()){
+		  header('Location: indexdirector.php');
+		} else echo "Error2";
+	}
+	elseif($foto !='' and $pass != ''){
+		if($usuari->actualitzarAdministratiuFotoIPass()){
+		move_uploaded_file($fototmp, ruta.$foto);
+		  header('Location: indexdirector.php');
+		} else echo "Error3";
+	}
+	elseif($foto == '' and $pass !='') {
+		print $pass;
+		if($usuari->actualitzarAdministratiuPass()){
+			header('Location: indexdirector.php');
+		}else print "Error4";
+	}else print "Error inesperat";
+
 }
