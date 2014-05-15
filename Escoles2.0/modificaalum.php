@@ -129,7 +129,7 @@ $alumne = $_REQUEST['a'];
         <div class="clearfix"></div>
         <div class="form-group col-md-12">
           <button type="submit" class="btn btn-success" onclick = "this.form.action ='actualitzaralumne.php'">Modificar Alumne</button>
-          <button type="submit" class="btn btn-danger" onclick="javascript:history.go(-1)">Tornar sense desar</button>
+          <button type="submit" class="btn btn-danger" onclick="<?php header('Location: indexadministratiu.php?pe=1') ?>">Tornar sense desar</button>
         </div>
         <div class="clearfix"></div>
         <div class="form-group col-md-12"></div>

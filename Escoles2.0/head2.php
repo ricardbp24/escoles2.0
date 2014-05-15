@@ -14,7 +14,7 @@
   <script src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
   <script type="text/javascript">
-		$(document).ready(function() {
+    $(document).ready(function() {
         $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
           e.preventDefault();
           $(this).siblings('a.active').removeClass("active");
@@ -26,5 +26,5 @@
         $('dropdown-menu').find('form').click(function(e) {
            e.stopPropagation();
         });
-		});
+    });
     </script>

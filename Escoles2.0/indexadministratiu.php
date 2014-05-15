@@ -1,4 +1,4 @@
-<?php require_once 'head2.php';?>
+<?php require_once 'head.php';?>
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
@@ -91,30 +91,30 @@
   }
 </style>
 </head>
-<body>
+<body onload="canviPestanya()">
   <?php require_once 'barranav.php';?>
   <div class="">
     <div class="row">
       <div class="col-md-12 bhoechie-tab-container">
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
             <div class="list-group">
-              <a href="#" class="list-group-item active text-center">
+              <a href="#" class="list-group-item active text-center" id="bcrear">
                 <h4 class="glyphicon glyphicon-user"></h4><br/>Crear Alumnes
               </a>
-              <a href="#" class="list-group-item text-center">
+              <a href="#" class="list-group-item text-center" id="bmodificar">
                 <h4 class="glyphicon glyphicon-pencil"></h4><br/>Modificar Alumnes
               </a>
-              <a href="#" class="list-group-item text-center">
+              <a href="#" class="list-group-item text-center" id="bmatricular">
                 <h4 class="glyphicon glyphicon-list"></h4><br/>Matricular
               </a>
-              <a href="#" class="list-group-item text-center">
+              <a href="#" class="list-group-item text-center" id="bcomptabilitat">
                 <h4 class="glyphicon glyphicon-euro"></h4><br/>Comptabilitat
               </a>
             </div>
           </div>
           <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
             <!-- Crear alumnes -->  
-            <div class="bhoechie-tab-content active">
+            <div class="bhoechie-tab-content active" id="crear">
               <center>
                 <!-- alerta de si s'ha creat un alumne -->
                 <?php
@@ -205,7 +205,7 @@
               </center>
               </div>
               <!-- Modificar alumnes -->
-              <div class="bhoechie-tab-content">
+              <div class="bhoechie-tab-content" id="modificar">
                 <center>
                   <h3>Modificació d'alumnes</h3>
                 </center>
@@ -259,7 +259,7 @@
               </div>
 
               <!-- Matricular -->
-              <div class="bhoechie-tab-content">
+              <div class="bhoechie-tab-content" id="matricular">
                 <center>
                   <h3>Matriculació d'alumnes</h3>
                 </center>
@@ -303,7 +303,7 @@
               </div>
 
               <!-- Comptabilitat -->
-              <div class="bhoechie-tab-content">
+              <div class="bhoechie-tab-content" id="comptabilitat">
                 <div class="col-md-12">
                   <form role="form" class="form" method="post">
                     <div class="form-group col-md-4 ">
@@ -326,7 +326,9 @@
                     <button type="submit" class="btn btn-success" onclick="this.form.action='facturar.php'">Facturar</button>
                   </form>
                   <div class="col-md-12" id="taulapaginada">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-striped">
+                        <?php require_once 'classes/usuari.php';
+                        $alumne = new usuari(); ?>
                       <thead>
                         <tr>
                           <th>Alumne</th>
@@ -343,12 +345,12 @@
                           $linies = $bd->query("SELECT * FROM Assentaments");
                           while ($linia = $linies->fetch_array(MYSQLI_ASSOC)){                            
                         ?>
-                        <tr>                          
-                          <td><?=utf8_encode($linia['ID_Alumne'])?></td>
+                          <tr>                          
+                            <td><?=utf8_encode($alumne->mostrarAlumne($linia['ID_Alumne']))?></td>
                           <td><?=utf8_encode($linia['Concepte'])?></td>
                           <td><?=utf8_encode($linia['Import'])?></td>
                           <td><?=utf8_encode($linia['Data'])?></td>
-                          <td><?=utf8_encode($linia['Facturat'])?></td>
+                          <td><?php if ($linia['Facturat']==0){echo 'NO';}else{echo 'SI';} ?></td>
                         </tr>
                           <?php } ?>
                       </tbody>
@@ -356,10 +358,46 @@
                   </div>
                 </div>
               </div>
-
+              <h1 class="text-center" id="titul">Gestió integral de centres privats</h1>
           </div>
       </div>
     </div>
-  </div>       
+  </div>
+    <script>
+        function canviPestanya() {
+            var id = getURLParameter('pe');
+            document.getElementById("crear").className = document.getElementById("crear").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("modificar").className = document.getElementById("modificar").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("matricular").className = document.getElementById("matricular").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("comptabilitat").className = document.getElementById("comptabilitat").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("bcrear").className = document.getElementById("bcrear").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("bmodificar").className = document.getElementById("bmodificar").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("bmatricular").className = document.getElementById("bmatricular").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            document.getElementById("bcomptabilitat").className = document.getElementById("bcomptabilitat").className.replace(/(?:^|\s)active(?!\S)/g , '');
+            if (id == '0') {               
+                document.getElementById("crear").className += " active";
+                document.getElementById("bcrear").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '1') {               
+                document.getElementById("modificar").className += " active";
+                document.getElementById("bmodificar").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '2') {               
+                document.getElementById("matricular").className += " active";
+                document.getElementById("bmatricular").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+            if (id == '3') {               
+                document.getElementById("comptabilitat").className += " active";
+                document.getElementById("bcomptabilitat").className += " active";
+                document.getElementById("titul").className += " hidden";
+            }
+        }
+        function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+          }
+    </script>
 </body>
 </html>

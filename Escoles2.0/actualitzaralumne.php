@@ -43,7 +43,7 @@ if ($alta == "on") {
 
 if ($alumne->actualitzar()){
   move_uploaded_file($fototmp, ruta.$foto);
-  header('Location: indexadministratiu.php');
+  header('Location: indexadministratiu.php?pe=1');
 } else {
   echo "error";
 }

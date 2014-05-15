@@ -122,8 +122,16 @@ class usuari {
       $this->alta = 1;
     } else {
       $this->alta = 0;
-    }
-    
+    }    
+  }
+  
+  public function mostrarAlumne($id) {
+      $this->id = $id;
+      require_once 'connexio.php';
+      $bd = new connexio();
+      $usuari = $bd->query("SELECT * FROM Alumnes WHERE ID=".$this->getId()." LIMIT 1");
+      $nomcomplet = $usuari->fetch_array(MYSQLI_ASSOC);
+      return $nomcomplet['Nom'].' '.$nomcomplet['Cognom1'].' '.$nomcomplet['Cognom2'];
   }
 }
 

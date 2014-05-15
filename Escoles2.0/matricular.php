@@ -22,5 +22,5 @@ foreach ($alumnes as $al) {
 <body>
   <?php require_once 'barranav.php';?>
   <div class="alert alert-info"><?php echo utf8_encode($text); ?></div>
-<center><button class="btn btn-success btn-lg" onclick="window.location.href='indexadministratiu.php'">Tornar</button></center>
+<center><button class="btn btn-success btn-lg" onclick="window.location.href='indexadministratiu.php?pe=2'">Tornar</button></center>
 </body>
