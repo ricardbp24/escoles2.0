@@ -22,11 +22,11 @@ class usuari {
   private $foto;
   private $tipus;
   private $alta;
-  
+
   function __construct() {
-    
+
   }
-  
+
   public function getId() {
     return $this->id;
   }
@@ -51,7 +51,7 @@ class usuari {
   public function getDni() {
     return $this->dni;
   }
-  public function gePassword() {
+  public function getPassword() {
     return $this->password;
   }
   public function getCarrer() {
@@ -122,9 +122,9 @@ class usuari {
       $this->alta = 1;
     } else {
       $this->alta = 0;
-    }    
+    }
   }
-  
+
   public function mostrarAlumne($id) {
       $this->id = $id;
       require_once 'connexio.php';
@@ -135,6 +135,7 @@ class usuari {
   }
 }
 
+///////////////////DIRECTOR////////////////////////
 class director extends usuari {
   function __construct($dni) {
     parent::__construct();
@@ -142,13 +143,13 @@ class director extends usuari {
   }
   public function actualitzarDirector() {
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
-    
+
     $bd->close();
   }
 }
@@ -181,13 +182,13 @@ class professor extends usuari {
 
   public function actualitzarProfessor() {
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()." WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
-    
+
     $bd->close();
   }
 }
@@ -221,46 +222,46 @@ class administratiu extends usuari {
 
   public function actualitzarAdministratiuFoto(){
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
-    
+
     $bd->close();
   }
   public function actualitzarAdministratiuSinFoto(){
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
-    
+
     $bd->close();
   }
   public function actualitzarAdministratiuFotoIPass(){
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
-    
+
     $bd->close();
   }
   public function actualitzarAdministratiuPass(){
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Usuaris SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Password='".$this->getPassword()."',Alta_Baixa='".$this->getAlta()."' WHERE DNI='$this->dni'");
     echo $sql;
     if ($bd->query($sql)) return TRUE;
     else return FALSE;
-    
+
     $bd->close();
   }
 }
@@ -285,7 +286,7 @@ class nouAdministratiu extends administratiu {
   }
   public function insertarUsuari(){
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("INSERT INTO Usuaris (Nom,Cognom1,Cognom2,Data_Naixement,Telefon1,Telefon2,DNI,Password,Carrer,Codi_Postal,Poblacio,Correu_Electronic,Foto,Tipus,Alta_Baixa) VALUES ('$this->nom','$this->cognom1','$this->cognom2','$this->data_naixement','$this->telefon1','$this->telefon2','$this->dni','$this->password','$this->carrer','$this->codi_postal','$this->poblacio','$this->correu_electronic','$this->foto','$this->tipus','$this->alta')");
     if ($bd->query($sql)) {
@@ -293,38 +294,39 @@ class nouAdministratiu extends administratiu {
     } else {
       return FALSE;
     }
-    
+
     $bd->close();
   }
 }
+///////////////////DIRECTOR////////////////////////
 
 
 class alumne extends usuari {
   private $compte_corrent;
   private $persona_contacte;
-  
+
   function __construct($dni) {
     parent::__construct();
     $this->dni = $dni;
   }
-  
+
   public function getCCC() {
     return $this->compte_corrent;
   }
   public function getPresonacontacte() {
     return $this->persona_contacte;
   }
-  
+
   public function setCCC($ccc) {
     $this->compte_corrent = $ccc;
   }
   public function setPresonacontacte($pc) {
     $this->persona_contacte = $pc;
   }
-  
+
   public function actualitzar() {
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("UPDATE Alumnes SET Nom='".$this->getNom()."',Cognom1='".$this->getCognom1()."',Cognom2='".$this->getCognom2()."',Data_Naixement='".$this->getDatanaixement()."',Telefon1='".$this->getTelefon1()."',Telefon2='".$this->getTelefon2()."',DNI='".$this->dni."',Carrer='".$this->getCarrer()."',Codi_Postal='".$this->getCpostal()."',Poblacio='".$this->getPoblacio()."',Correu_Electronic='".$this->getCelectronic()."',Foto='".$this->getFoto()."',Persona_Contacte='".$this->persona_contacte."',Compte_Corrent='".$this->compte_corrent."',Alta_Baixa=".$this->getAlta()." WHERE DNI='$this->dni'");
     echo $sql;
@@ -333,13 +335,13 @@ class alumne extends usuari {
     } else {
       return FALSE;
     }
-    
+
     $bd->close();
   }
 }
 
 class nouAlumne extends alumne {
-  
+
   function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto,$ccc,$pc) {
     parent::__construct($dni);
     $this->nom = $nom;
@@ -358,10 +360,10 @@ class nouAlumne extends alumne {
     $this->persona_contacte = $pc;
     $this->alta = 1;
   }
-  
+
   public function insertar() {
     require_once 'connexio.php';
-    
+
     $bd = new connexio();
     $sql = ("INSERT INTO Alumnes (Nom,Cognom1,Cognom2,Data_Naixement,Telefon1,Telefon2,DNI,Carrer,Codi_Postal,Poblacio,Correu_Electronic,Foto,Persona_Contacte,Compte_Corrent,Alta_Baixa) VALUES ('$this->nom','$this->cognom1','$this->cognom2','$this->data_naixement','$this->telefon1','$this->telefon2','$this->dni','$this->carrer','$this->codi_postal','$this->poblacio','$this->correu_electronic','$this->foto','$this->persona_contacte','$this->compte_corrent',$this->alta)");
     echo $sql;
@@ -370,8 +372,8 @@ class nouAlumne extends alumne {
     } else {
       return FALSE;
     }
-    
+
     $bd->close();
   }
-  
+
 }

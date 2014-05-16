@@ -1,10 +1,14 @@
 <?php require_once 'head.php';
-
-/** 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+if ($_SESSION['tipus']!=1) {
+  switch ($_SESSION['tipus']) {
+      case 2:
+          header('Location: indexprofessor.php');
+          break;
+      case 3:
+          header('Location: indexadministratiu.php');
+          break;
+    }
+}
 ?>
 
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
@@ -14,7 +18,7 @@
   $(function() {
     $(".multiselect").multiselect();
   });
-  
+
   function paginar(numpagina) {
     if (window.XMLHttpRequest)
       {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -33,7 +37,7 @@
           }
     };
 
-    xmlhttp.open("GET","paginatmodificaalumne.php?npag="+numpagina,true);
+    xmlhttp.open("GET","paginatmodificausuari.php?npag="+numpagina,true);
     xmlhttp.send();
   }
   function filtrar() {
@@ -58,26 +62,30 @@
     xmlhttp2.open("GET","filtratusuari.php?c="+criteri,true);
     xmlhttp2.send();
   }
-  
-  jQuery.fn.multiselect = function() {
-    $(this).each(function() {
-        var checkboxes = $(this).find("input:checkbox");
-        checkboxes.each(function() {
-            var checkbox = $(this);
-            // Highlight pre-selected checkboxes
-            if (checkbox.prop("checked"))
-                checkbox.parent().addClass("multiselect-on");
- 
-            // Highlight checkboxes that the user selects
-            checkbox.click(function() {
-                if (checkbox.prop("checked"))
-                    checkbox.parent().addClass("multiselect-on");
-                else
-                    checkbox.parent().removeClass("multiselect-on");
-            });
-        });
-    });
-  };
+
+  function filtrarAula() {
+    var criteri = document.getElementById("inputmodificaAula").value;
+    if (window.XMLHttpRequest)
+      {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp3=new XMLHttpRequest();
+      }
+    else
+      {// code for IE6, IE5
+      xmlhttp3=new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+    xmlhttp2.onreadystatechange=function()
+    {
+       if (xmlhttp3.readyState===4 && xmlhttp3.status===200)
+          {
+             document.getElementById("taulapaginadAula").innerHTML = xmlhttp3.responseText;
+          }
+    };
+
+    xmlhttp3.open("GET","filtrataula.php?c="+criteri,true);
+    xmlhttp3.send();
+  }
+
 </script>
 <style>
   .multiselect {
@@ -115,10 +123,13 @@
               <a href="#" class="list-group-item text-center">
                 <h4 class="glyphicon glyphicon-list"></h4><br/>Crear Aula
               </a>
+              <a href="#" class="list-group-item text-center">
+                <h4 class="glyphicon glyphicon-pencil"></h4><br/>Modificar Aula
+              </a>
             </div>
           </div>
           <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 bhoechie-tab">
-            <!-- Crear usuari -->  
+            <!-- Crear usuari -->
             <div class="bhoechie-tab-content active">
               <center>
                 <!-- alerta de si s'ha creat un alumne -->
@@ -128,7 +139,7 @@
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                   <strong>Alumne creat correctament!</strong>
                 </div>
-                <?php unset($_SESSION['nouusuari']) ;} ?> 
+                <?php unset($_SESSION['nouusuari']) ;} ?>
                 <h3>Nou usuari</h3>
                 <form class="form" role="form" method="post" action="insertusuari.php" enctype="multipart/form-data">
                   <div class="form-group col-md-4">
@@ -211,8 +222,8 @@
                     <input type="file" class="form-control" name="foto" placeholder="Foto de l'alumne">
                   </div>
                   <div class="form-group col-md-4">
-                  	<label for="tipus2" class="sr-only">Tipus usuari</label>
-                  	<select name="tipus2" class="form-control">
+                  	<label for="tipus" class="sr-only">Tipus usuari</label>
+                  	<select name="tipus" class="form-control">
                   		<?php
                   			require_once("classes/tipususuari.php");
                   			$tipus = new tipususuari();
@@ -220,95 +231,145 @@
                   		?>
                   	</select>
                   </div>
-                  
+
                   <div class="clearfix"></div>
                   <button type="submit" class="btn btn-info">Crear Usuari</button>
                   <div class="clearfix"></div>
                   <div class="form-group col-md-12"></div>
                 </form>
               </center>
-              </div>
+            </div>
 
-              <!-- Modificar Usuari -->
-              <div class="bhoechie-tab-content">
+            <!-- Modificar Usuari -->
+            <div class="bhoechie-tab-content">
+              <center>
+                <h3>Modificació d'usuaris</h3>
+              </center>
+              <form class="form" role="form">
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" onkeyup="filtrar()" id="inputmodifica" placeholder="Usuari a buscar">
+                </div>
+              </form>
+              <div class="col-md-12" id="taulapaginada">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Primer Cognom</th>
+                    <th>Segon Cognom</th>
+                    <th>DNI/NIE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    include_once 'classes/connexio.php';
+                    $bd = new connexio();
+                    $consulta = $bd->query("SELECT ID FROM Usuaris");
+                    $totalfiles = $consulta->num_rows;
+                    $perpagina = 5;
+                    $totalpagines = $totalfiles / $perpagina;
+                    if (($totalfiles % $perpagina)>0) {
+                      $totalpagines++;
+                    }
+                    $consulta2 = $bd->query("SELECT ID,Nom,Cognom1,Cognom2,DNI,Alta_Baixa FROM Usuaris ORDER BY Cognom1,Cognom2,Nom LIMIT $perpagina");
+                    $i=1;
+                    while ($usuari = $consulta2->fetch_array(MYSQLI_ASSOC)) { ?>
+                  <tr <?php if ($usuari['Alta_Baixa'] == 0) { echo 'class="warning"'; } ?>>
+                    <td><?php echo utf8_encode($usuari['Nom']); ?></td>
+                    <td><?php echo utf8_encode($usuari['Cognom1']); ?></td>
+                    <td><?php echo utf8_encode($usuari['Cognom2']); ?></td>
+                    <td><?php echo utf8_encode($usuari['DNI']); ?></td>
+                    <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificausuari.php?a=<?php echo $usuari['ID'] ?>'">Modificar</button></td>
+                  </tr>
+                    <?php $i++; } $bd->close(); ?>
+                </tbody>
+              </table>
+              <center>
+                <ul class="pagination pagination-sm">
+                  <?php for ($i=1;$i<=$totalpagines;$i++) { ?>
+                  <li><a href="#" onclick="paginar(<?php echo $i; ?>)"><?php echo $i; ?></a></li>
+                  <?php } ?>
+                </ul>
+              </center>
+              </div>
+            </div>
+            <!--Afegir Aules -->
+            <div class="bhoechie-tab-content">
                 <center>
-                  <h3>Modificació d'usuaris</h3>
+                  <h3>Crear aula</h3>
+                  <form class="form" role="form" method="post" action="insertaula.php" enctype="multipart/form-data">
+                    <div class="form-group col-md-4">
+                      <label class="sr-only" for="nom_aula">Nom Aula</label>
+                      <input type="text" class="form-control" name="nom_aula" placeholder="Nom aula" required="required">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="sr-only" for="capacitat">Capacitat</label>
+                      <input type="text" class="form-control" name="capacitat" placeholder="Capacitat" required="required">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="sr-only" for="planta">Planta</label>
+                      <input type="text" class="form-control" name="planta" placeholder="Planta" required="required">
+                    </div>
+                    <div class="clearfix"></div>
+                    <button type="submit" class="btn btn-info">Crear Aula</button>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-md-12"></div>
+                  </form>
                 </center>
+            </div >
+            <!--Modificar Aules -->
+            <div class="bhoechie-tab-content">
+              <center>
+                <h3>Modificar aules</h3>
                 <form class="form" role="form">
-                  <div class="form-group col-md-6">
-                    <input type="text" class="form-control" onkeyup="filtrar()" id="inputmodifica" placeholder="Usuari a buscar">
-                  </div>
-                </form>
-                <div class="col-md-12" id="taulapaginada">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Nom</th>
-                      <th>Primer Cognom</th>
-                      <th>Segon Cognom</th>
-                      <th>DNI/NIE</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                      include_once 'classes/connexio.php';
-                      $bd = new connexio();
-                      $consulta = $bd->query("SELECT ID FROM Usuaris");
-                      $totalfiles = $consulta->num_rows;
-                      $perpagina = 5;
-                      $totalpagines = $totalfiles / $perpagina;
-                      if (($totalfiles % $perpagina)>0) {
-                        $totalpagines++;
-                      }
-                      $consulta2 = $bd->query("SELECT ID,Nom,Cognom1,Cognom2,DNI,Alta_Baixa FROM Usuaris ORDER BY Cognom1,Cognom2,Nom LIMIT $perpagina");
-                      $i=1;
-                      while ($usuari = $consulta2->fetch_array(MYSQLI_ASSOC)) { ?>
-                    <tr <?php if ($usuari['Alta_Baixa'] == 0) { echo 'class="warning"'; } ?>>
-                      <td><?php echo utf8_encode($usuari['Nom']); ?></td>
-                      <td><?php echo utf8_encode($usuari['Cognom1']); ?></td>
-                      <td><?php echo utf8_encode($usuari['Cognom2']); ?></td>
-                      <td><?php echo utf8_encode($usuari['DNI']); ?></td>
-                      <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificausuari.php?a=<?php echo $usuari['ID'] ?>'">Modificar</button></td>
-                    </tr>
-                      <?php $i++; } $bd->close(); ?>
-                  </tbody>
-                </table>
-                <center>
-                  <ul class="pagination pagination-sm">
-                    <?php for ($i=1;$i<=$totalpagines;$i++) { ?>
-                    <li><a href="#" onclick="paginar(<?php echo $i; ?>)"><?php echo $i; ?></a></li>
-                    <?php } ?>
-                  </ul>
-                </center>
-                </div>      
-              </div>
-              <!--Afegir Aules -->
-              <div class="bhoechie-tab-content">
-                  <center>
-                    <h3>Crear aula</h3>
-                    <form class="form" role="form" method="post" action="insertaula.php" enctype="multipart/form-data">
-                      <div class="form-group col-md-4">
-                        <label class="sr-only" for="nom_aula">Nom Aula</label>
-                        <input type="text" class="form-control" name="nom_aula" placeholder="Nom aula" required="required">
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label class="sr-only" for="capacitat">Capacitat</label>
-                        <input type="text" class="form-control" name="capacitat" placeholder="Capacitat" required="required">
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label class="sr-only" for="planta">Planta</label>
-                        <input type="text" class="form-control" name="planta" placeholder="Planta" required="required">
-                      </div>
-                      <div class="clearfix"></div>
-                      <button type="submit" class="btn btn-info">Crear Aula</button>
-                      <div class="clearfix"></div>
-                      <div class="form-group col-md-12"></div>
-                    </form>
-                  </center>                
-              </div>
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" onkeyup="filtrarAula()" id="inputmodificaAula" placeholder="Aula a buscar">
+                </div>
+              </form>
+              <div class="col-md-12" id="taulapaginadAula">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Nom d'aula</th>
+                    <th>Capacitat</th>
+                    <th>Planta</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    include_once 'classes/connexio.php';
+                    $bd = new connexio();
+                    $consulta = $bd->query("SELECT ID FROM Aules");
+                    $totalfiles = $consulta->num_rows;
+                    $perpagina = 5;
+                    $totalpagines = $totalfiles / $perpagina;
+                    if (($totalfiles % $perpagina)>0) {
+                      $totalpagines++;
+                    }
+                    $consulta2 = $bd->query("SELECT ID,Nom_Aula,Capacitat,Planta FROM Aules ORDER BY Planta,Capacitat LIMIT $perpagina");
+                    $i=1;
+                    while ($aula = $consulta2->fetch_array(MYSQLI_ASSOC)) { ?>
+                      <tr <?php if($aula['Capacitat'] == 0) { echo 'class="warning"'; } ?>>
+                        <td><?php echo utf8_encode($aula['Nom_Aula']); ?></td>
+                        <td><?php echo utf8_encode($aula['Capacitat']); ?></td>
+                        <td><?php echo utf8_encode($aula['Planta']); ?></td>
+                        <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificaaula.php?a=<?php echo $aula['ID'] ?>'">Modificar</button></td>
+                      </tr>
+                    <?php $i++; } $bd->close(); ?>
+                </tbody>
+              </table>
+              <center>
+                <ul class="pagination pagination-sm">
+                  <?php for ($i=1;$i<=$totalpagines;$i++) { ?>
+                  <li><a href="#" onclick="paginar(<?php echo $i; ?>)"><?php echo $i; ?></a></li>
+                  <?php } ?>
+                </ul>
+              </center>
+              </center>
+            </div>
           </div>
       </div>
     </div>
-  </div>       
+  </div>
 </body>
 </html>
