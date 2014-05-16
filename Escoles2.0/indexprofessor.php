@@ -1,4 +1,11 @@
 <?php require_once 'head.php';
+/**
+ * Aquest es el index principal de professor on podràs trobar (Posar Notes, faltes d'assistència, 
+ * mostrar faltes, anotacions i mostrar anotacions)
+ * @author Grup1
+ */
+
+//Si no es usuari professor tipus 2 renviar a la seva localització
 if ($_SESSION['tipus']!=2) {
   switch ($_SESSION['tipus']) {
       case 1:
@@ -36,7 +43,7 @@ if ($_SESSION['tipus']!=2) {
   }
 </style>
 </head>
-<body onload="buscaralum(); calcular(); anotacionsmostrar(); canviPestanya(); " >
+<body onload="buscaralum(); calcular();  canviPestanya(); " >
     <?php include_once 'barranav.php';  
     
     //Missatges
@@ -190,27 +197,45 @@ if ($_SESSION['tipus']!=2) {
                                     ?>
                                 </select>   
                         </div>
-                        
                         <div class="col-md-3">
                             <label>Data</label>
-                            <select class="form-control" id="datafalta" onchange="mostrarfaltes()">
-                                <?php 
-                                   require_once('classes/assistencia.php');
-                                   
-                                    $mostrar = new assistencia($idalumne,$idprofessor,$idassignatura,$data);
-                                    $mostrar->mostraradataassistencia();
-                                    
-                                ?>
-                            </select>
-                        
+                            <div class="input-group date calendari" data-date-format="dd MM yyyy" data-link-field="datafalta">
+                                <input class="form-control" type="text" value="" placeholder="Data de la falta" required="" title="És necessari una data">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
                         </div>
-     
+                            <input type="hidden" id="datafalta" value="" name="data"/>
+
+                            <!-- script de configuració del calendari emergent -->
+                            <script type="text/javascript">
+                                $('.calendari').datetimepicker({
+                                    language: 'ca',
+                                    weekStart: 1,
+                                    todayBtn:  1,
+                                    autoclose: 1,
+                                    todayHighlight: 1,
+                                    startView: 2,
+                                    forceParse: 0
+                                });
+                            </script>
+                             
                         <div class="col-md-2"><br>
                             <button class="btn btn-primary" type="submit" onclick="mostrarfaltes();"/>Mostrar faltes</button>
                         </div>
-                <label>Faltes</label>
-                <table  class="table table-striped table-hover table-responsive" id="mostrarfaltes">
-                             
+                
+                    <table  class="table table-striped table-hover table-responsive" >
+                        <thead>  
+                            <tr>
+                                <th style="width: 220px;">Nom i Cognoms</th>
+                                <th style="width: 200px;">Data</th>
+                                <th style="width: 90px;">Valor</th>
+                                <th style="width: 110px;">Faltes</th>
+                                <th style="width: 90px;">Guardar</th>
+                                <th style="width: 90px;">Eliminar</th>
+                                <th class="glyphicon glyphicon-refresh"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="mostrarfaltes"></tbody>
                     </table>
                 
                 </div>
@@ -368,6 +393,7 @@ if ($_SESSION['tipus']!=2) {
                     
                 </div>
                 <!-- Mostrar Final Anotacions -->
+                <h1 class="text-center" id="titul">Gestió integral de centres privats (Professors)</h1>
             </div>
         </div>
     </div>

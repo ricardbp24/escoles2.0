@@ -11,7 +11,7 @@ $curs = $_REQUEST['curs'];
 $datamod = substr($data,0,10);
 $professor = $_SESSION['id'];
 
-$sql = "SELECT Anotacions.ID as ID, Alumnes.Nom as NOMAL, Alumnes.Cognom1 as COGN1,ID_Assignatura, Alumnes.Cognom2 as COGN2, Data, Anotacio  FROM Anotacions JOIN Alumnes ON Anotacions.ID_Alumne = Alumnes.ID  WHERE Data LIKE  '$datamod%' AND ID_Professor = $professor AND ID_Assignatura = $assignatura AND IDCurs = $curs";
+$sql = "SELECT Anotacions.ID as ID, Alumnes.Nom as NOMAL, Alumnes.Cognom1 as COGN1,ID_Assignatura, Alumnes.Cognom2 as COGN2, Data, Anotacio  FROM Anotacions JOIN Alumnes ON Anotacions.ID_Alumne = Alumnes.ID  WHERE Data LIKE  '$datamod%' AND (ID_Professor = $professor AND ID_Assignatura = $assignatura AND IDCurs = $curs)";
 
     require_once('classes/connexio.php');
 					

@@ -71,7 +71,7 @@ class anotacio {
 	$bd->query('INSERT INTO Anotacions (ID_Assignatura,ID_Professor,ID_Alumne,Anotacio,IDCurs,Data) VALUES 
         ("'.$this->getIDAssignatura().'","'.$this->getIDProfessor().'","'.$this->getIDAlumne().'","'.$this->getAnotacio().'","'.$this->getIDCurs().'","'.$this->getData().'")');
        
-        header("Location:indexprofessor.php?correcte");
+        header("Location:indexprofessor.php?pe=2correcte");
    
     $bd->close(); 
         
