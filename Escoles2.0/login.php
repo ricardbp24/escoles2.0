@@ -20,16 +20,26 @@
     switch ($dades['Tipus']) {
       case 1:
           header('Location: indexdirector.php');
+          if (isset($_SESSION['loginerror'])) {
+              unset($_SESSION['loginerror']);
+          }
           break;
       case 2:
           header('Location: indexprofessor.php');
+          if (isset($_SESSION['loginerror'])) {
+              unset($_SESSION['loginerror']);
+          }
           break;
       case 3:
           header('Location: indexadministratiu.php');
+          if (isset($_SESSION['loginerror'])) {
+              unset($_SESSION['loginerror']);
+          }
           break;
     }
   } else {
-    header('Location: loginerror.php');
+    $_SESSION['loginerror']=1;
+    header('Location: index.php');
   }
 
   $bd->close();

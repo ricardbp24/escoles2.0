@@ -88,7 +88,6 @@ class assentament {
         }
       }
       if (!$repetit) {
-        var_dump($repetit);
         $cursactual = $bd->query("SELECT ID FROM Cursos ORDER BY ID DESC LIMIT 1");
         $curs = $cursactual->fetch_array(MYSQLI_ASSOC);
         $alumnesmatriculats = $bd->query("SELECT IDAlumne FROM Matricules WHERE Curs=".$curs['ID']." GROUP BY IDAlumne");
@@ -122,7 +121,7 @@ class assentament {
       
       $bd = new connexio();
       $nofacturats = $bd->query("SELECT * FROM Assentaments WHERE Facturat=0");
-      $file = $_SERVER['DOCUMENT_ROOT'].'/remeses/'.$data = date("Y-m-d",time());
+      $file = $_SERVER['DOCUMENT_ROOT'].'/remeses/'.$data = date("Y-m-d",time()).".txt";
       $arxiu = fopen($file, 'a+');
       while ($linies = $nofacturats->fetch_array(MYSQLI_ASSOC)) {
         $bd->query("UPDATE Assentaments SET Facturat=1 WHERE ID = ".$linies['ID']);

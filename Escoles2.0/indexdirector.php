@@ -211,8 +211,8 @@
                     <input type="file" class="form-control" name="foto" placeholder="Foto de l'alumne">
                   </div>
                   <div class="form-group col-md-4">
-                  	<label for="tipus" class="sr-only">Tipus usuari</label>
-                  	<select name="tipus" class="form-control">
+                  	<label for="tipus2" class="sr-only">Tipus usuari</label>
+                  	<select name="tipus2" class="form-control">
                   		<?php
                   			require_once("classes/tipususuari.php");
                   			$tipus = new tipususuari();

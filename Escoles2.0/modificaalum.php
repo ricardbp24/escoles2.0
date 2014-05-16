@@ -1,20 +1,22 @@
 <?php require_once 'head.php';
-$alumne = $_REQUEST['a']; 
+  $alumne = $_REQUEST['a']; 
   include_once 'classes/connexio.php';
   include_once 'classes/usuari.php';
   $bd = new connexio();
   $consulta = $bd->query("SELECT * FROM Alumnes WHERE ID=$alumne");
   $resultat = $consulta->fetch_array(MYSQLI_ASSOC);
+  $posicio = $resultat['Carrer'].' '.$resultat['Codi_Postal'].' '.$resultat['Poblacio'];
+  if ($resultat['Alta_Baixa']==1) {
+      $check=TRUE;
+  } else {
+      $check=FALSE;
+  }
 ?>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJXDCpT7KfAbW6JGQcnE1uQuRzRI1PBxo&sensor=false"></script>
-<script>   
-   $(document).ready(function() {
-     var mapa = {
-				zoom: 14, 
-				center: new google.maps.LatLng(40.705, 0.58), 
-				mapTypeId: google.maps.MapTypeId.MAP
-			};
-     var map = new google.maps.Map($("#mapa").get(0), mapa);
+<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
+<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
+<script>
+$(document).ready(function() {
      $('input[name="nom"]').val("<?php echo utf8_encode($resultat['Nom']); ?>");
      $('input[name="cognom1"]').val("<?php echo utf8_encode($resultat['Cognom1']); ?>");
      $('input[name="cognom2"]').val("<?php echo utf8_encode($resultat['Cognom2']); ?>");
@@ -29,7 +31,7 @@ $alumne = $_REQUEST['a'];
      $('input[name="ae"]').val("<?php echo utf8_encode($resultat['Correu_Electronic']); ?>");
      $('input[name="contacte"]').val("<?php echo utf8_encode($resultat['Persona_Contacte']); ?>");
      $('input[name="ccc"]').val("<?php echo utf8_encode($resultat['Compte_Corrent']); ?>");
-     $('input[name="alta"]').attr('checked', <?php echo $resultat['Alta_Baixa']; ?>);
+     $('input[name="alta"]').attr('checked', <?php echo $check; ?>);
    });
    <?php if ($resultat['Foto']!=""){
      $imatge = "fotos/".$resultat['Foto'];
@@ -37,10 +39,6 @@ $alumne = $_REQUEST['a'];
      $imatge = "recursos/default.jpg";
    }?>
 </script> 
-<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
-<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.ca.js" charset="UTF-8"></script>
-
 </head>
 <body>
   <?php require_once 'barranav.php';?>
@@ -140,10 +138,40 @@ $alumne = $_REQUEST['a'];
           <img class="img-circle" src="<?php echo $imatge; ?>">
         </div>
         <div class="clearfix"></div>
-        <div id="mapa"></div>
+        <div class="form-group col-md-12"></div>
+        <div id="mapa" style="width: 300px; height: 300px;"></div>
       </div>
     </center>
     
   </div>
+    <script>
+        var geocoder;
+        var map;
+        function initialize() {
+          geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(40.705, 0.58);
+          var mapOptions = {
+            zoom: 16,
+            center: latlng
+          }
+          map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+          var address = "<?php echo $posicio; ?>";
+          geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              map.setCenter(results[0].geometry.location);
+              var marker = new google.maps.Marker({
+                  map: map,
+                  position: results[0].geometry.location
+              });
+            } else {
+              alert('El mapa no es mostrarà correctament, la direcció és incorrecta');
+            }
+          });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
 </body>
 </html>
+<?php $bd->close();

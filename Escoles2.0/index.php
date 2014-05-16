@@ -1,3 +1,19 @@
+<?php
+@session_start();
+if (isset($_SESSION['id'])) {
+    switch ($_SESSION['tipus']) {
+      case 1:
+          header('Location: indexdirector.php');
+          break;
+      case 2:
+          header('Location: indexprofessor.php');
+          break;
+      case 3:
+          header('Location: indexadministratiu.php');
+          break;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,12 +125,23 @@
         text-shadow: 0 2px 2px rgba(0,0,0,0.5);
         z-index: 2;
       }
+      .alert {
+          position: relative;
+          z-index: 99;
+      }
     </style>
   <body>
     <div id="fullscreen_bg" class="fullscreen_bg"></div>
         <div class="container">
+          <?php
+            if (isset($_SESSION['loginerror'])) {?>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Ooops!</strong> Dades incorrectes, torna-ho a intentar.
+            </div>
+            <?php } ?>
           <form class="form-signin" method="post" action="login.php">
-            <h1 class="form-signin-heading text-muted strong">Escoles 2.0</h1>
+            <h1 class="form-signin-heading text-muted strong">Escoles 2.0</h1>            
             <input type="text" class="form-control" name="usuari" placeholder="DNI" required="" autofocus="">
             <input type="password" class="form-control" name="contrassenya" placeholder="Contrassenya" required="">
             <button class="btn btn-lg btn-primary btn-block" type="submit">
