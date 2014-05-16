@@ -7,8 +7,8 @@ class aula{
 	private $capacitat;
 	private $planta;
 
-	function __construct(){
-
+	function __construct($id){
+		$this->id = $id;
 	}
 
 	public function getId(){
@@ -24,21 +24,22 @@ class aula{
 		return $this->planta;
 	}
 
-	public function setNomAula(){
+	public function setNomAula($nom_aula){
 		$this->nom_aula = $nom_aula;
 	}
-	public function setCapacitat(){
+	public function setCapacitat($capacitat){
 		$this->capacitat = $capacitat;
 	}
-	public function setPlanta(){
+	public function setPlanta($planta){
 		$this->planta = $planta;
 	}
 
 	public function actualitzaAula(){
 		require_once 'connexio.php';
-		
+
 		$bd = new connexio();
-		$sql = ("UPDATE Aules SET Nom_Aula='".$this->getNomAula()."',Capacitat='".$this->getCapacitat()."',Planta='".$this->getPlanta()." WHERE ID='$this->id'");
+		print $this->id;
+		$sql = ("UPDATE Aules SET Nom_Aula='".$this->getNomAula()."',Capacitat='".$this->getCapacitat()."',Planta='".$this->getPlanta()."' WHERE ID='$this->id'");
 		print $sql;
 		if($bd->query($sql)) return true;
 		else return false;
@@ -56,7 +57,7 @@ class novaAula{
 	}
 	public function insertaAula(){
 		require_once 'connexio.php';
-		
+
 		$bd = new connexio();
 		$sql = ("INSERT INTO Aules (Nom_Aula,Capacitat,Planta) VALUES('$this->nom_aula','$this->capacitat','$this->planta')");
 		if($bd->query($sql)) return true;
