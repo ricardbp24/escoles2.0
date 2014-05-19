@@ -6,12 +6,14 @@ class assistencia{
     private $idalumne;
     private $idprofessor;
     private $idassignatura;
+    private $falta;
     private $data;
     
-    function __construct($idalumne,$idprofessor,$idassignatura,$data) {
+    function __construct($idalumne,$idprofessor,$idassignatura,$falta,$data) {
         $this->idalumne = $idalumne;
         $this->idprofessor = $idprofessor;
         $this->idassignatura = $idassignatura;
+        $this->falta = $falta;
         $this->data = $data;
     }
     
@@ -29,6 +31,10 @@ class assistencia{
     
     public function getIDAssignatura(){
         return $this->idassignatura;
+    }
+    
+    public function getFalta(){
+        return $this->falta;
     }
     
     public function getData(){
@@ -53,8 +59,8 @@ class assistencia{
     
     if($num == 0){
         
-	$bd->query('INSERT INTO Assistencia (IDAlumnes,IDProfessor,IDAssignatura,Data) VALUES 
-        ("'.$this->getIDAlumne().'","'.$this->getIDProfessor().'","'.$this->getIDAssignatura().'","'.$this->getData().'")');
+	$bd->query('INSERT INTO Assistencia (IDAlumnes,IDProfessor,IDAssignatura,Falta, Data) VALUES 
+        ("'.$this->getIDAlumne().'","'.$this->getIDProfessor().'","'.$this->getIDAssignatura().'","'.$this->getFalta().'","'.$this->getData().'")');
          header("Location:indexprofessor.php?pe=1&missatge=faltes-correcte");
     }else{
         
@@ -83,4 +89,5 @@ class assistencia{
         
         $bd->close();
     }
+    
 }

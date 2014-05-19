@@ -42,6 +42,7 @@ if ($_SESSION['tipus']!=2) {
       background-color:#0FD8B0;
   }
 </style>
+
 </head>
 <body onload="buscaralum(); calcular();  canviPestanya(); " >
     <?php include_once 'barranav.php';  
@@ -50,6 +51,8 @@ if ($_SESSION['tipus']!=2) {
     
     $faltescorrecte = "Alumnes o alumnes amb falta ïntroduida";
     $faltaerror = "ERROR! Aquest alumne/s ja tenen falta";
+    $eliminaralum = "Falta alumne eliminada!!";
+    $faltacanvi = "Falta de l'alumne canviada!";
     
     if(!isset($_GET['missatge']) && $_GET['pe'] ){  
         //No mostrar cap valor    
@@ -71,6 +74,26 @@ if ($_SESSION['tipus']!=2) {
         <div class="alert alert-success col-md-6 col-md-offset-3">
             <span class="glyphicon glyphicon-ok"></span>  <?php echo $faltescorrecte; ?>  
             <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=1"></a>
+        </div>
+    </div>
+    <?php
+    }else if($_GET['missatge']== 'alum-eliminat'){
+    
+    ?>
+    <div class="container">
+        <div class="alert alert-success col-md-6 col-md-offset-3">
+            <span class="glyphicon glyphicon-ok"></span>  <?php echo $eliminaralum; ?>  
+            <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=2"></a>
+        </div>
+    </div>
+    <?php
+    }else if($_GET['missatge']== 'falta-canviada'){
+    
+    ?>
+    <div class="container">
+        <div class="alert alert-success col-md-6 col-md-offset-3">
+            <span class="glyphicon glyphicon-ok"></span>  <?php echo $faltacanvi; ?>  
+            <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=2"></a>
         </div>
     </div>
     <?php
@@ -134,7 +157,23 @@ if ($_SESSION['tipus']!=2) {
                                 <?php } $bd->close(); ?>
                             </select>
                         </div><br>
-                        <table  class="table table-striped table-hover table-responsive" id="alumne"></table>
+                        <table  class="table table-striped table-hover table-responsive" >
+                            <thead>
+                                 <tr>
+                                    <th style="width: 250px;">Cognoms i nom</th>
+                                    <th style="width: 100px;">1 Trimestre</th>
+                                    <th style="width: 100px;">2 Trimestre</th>
+                                    <th style="width: 100px;">3 Trimestre</th>
+                                    <th style="width: 50px;">Guardar</th>
+                                    <th style="width: 50px;" class="glyphicon glyphicon-refresh"></th>
+                                 </tr>
+                            </thead>
+                            <tbody id="alumne">
+                                
+                            </tbody>
+                            
+                            
+                        </table>
                 </div>
                 <!--Final posar notes -->
                 
@@ -229,8 +268,7 @@ if ($_SESSION['tipus']!=2) {
                                 <th style="width: 220px;">Nom i Cognoms</th>
                                 <th style="width: 200px;">Data</th>
                                 <th style="width: 90px;">Valor</th>
-                                <th style="width: 110px;">Faltes</th>
-                                <th style="width: 90px;">Guardar</th>
+                                <th style="width: 180px;">Valor i Guardar</th>
                                 <th style="width: 90px;">Eliminar</th>
                                 <th class="glyphicon glyphicon-refresh"></th>
                             </tr>
@@ -380,7 +418,8 @@ if ($_SESSION['tipus']!=2) {
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Alumne</th>
+                                    <th style="width:250px;">Alumne</th>
+                                    <th style="width:200px;">Data</th>
                                     <th>Anotació</th>
                                 </tr>
                             </thead>

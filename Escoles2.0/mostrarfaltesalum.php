@@ -14,21 +14,32 @@ $professor = $_SESSION['id'];
 	while ($row = $temp->fetch_array(MYSQLI_ASSOC)) {
              $falta = $row['Falta'];
     ?>
-    <tr>  
+
+    <tr>
         <td><?php echo utf8_encode($row['COGN1']." ".$row['COGN2'].", ".$row['NOMAL']); ?></td>
         <td><?php echo utf8_encode($row['Data']); ?></td>
         <td><?php  echo utf8_encode($row['Falta']);  ?></td>
         <td>
-            <select class="form-control input-sm" name="valorfalta">
+            <form action='modificarfaltaalumne.php' method='post'>
+            <select style="width: 90px; float:left;" class="form-control input-sm" name="valorfalta">
                 <option value="Falta">Falta</option>
                 <option value="Retard">Retard</option>
             </select>
-        </td>
-        <td><button class="btn btn-success btn-sm"  id="guardar" onclick="guardar(<?php echo $row['ID'];?>)"/>Guardar</button></td>
-        <td><button class="btn btn-danger btn-sm"  value="<?php echo $row['NOMAL']; ?>"/>Eliminar</button></td>
         
+            <input type="hidden" name="IDASS"  value="<?php echo $row['ID']; ?>"/> 
+            <button style="float: right;" class="btn btn-success btn-sm" type="submit"  />Guardar</button>
+        </form>
+           
+        </td>
+        <td><button class="btn btn-danger btn-sm" onclick="if(confirm('Vols eliminar?')) window.location.href='eliminarfaltaalum.php?ID=<?php echo $row['ID']; ?>'" value="<?php echo $row['ID']; ?>"/>Eliminar</button></td>
+     
     </tr>
 
     <?php
 	}
+        ?>
+    
+</form>
+    
+    <?php
 $bd->close();

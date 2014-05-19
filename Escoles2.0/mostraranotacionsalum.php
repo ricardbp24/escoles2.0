@@ -21,6 +21,7 @@ $sql = "SELECT Anotacions.ID as ID, Alumnes.Nom as NOMAL, Alumnes.Cognom1 as COG
     ?>    
         <tr>
             <td class="col-md-2"><?php echo utf8_encode($fila['NOMAL'].", ".$fila['COGN1']." ".$fila['COGN2']); ?></td>
+            <td><?php echo utf8_encode($fila['Data']); ?> </td>
             <td><?php echo utf8_encode($fila['Anotacio']); ?></td>
         </tr>
     <?php

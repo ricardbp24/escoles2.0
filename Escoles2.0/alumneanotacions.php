@@ -15,5 +15,5 @@ $anotacio = $_POST['anotacio'];
 //echo "Assignatura: ".$assignatura."<br>alumnes: ".$alumnes."<br>IDPROF: ".$curs."<br>data: ".$data."<br>anotacio: ".$anotacio."<br>";
 require_once ('classes/anotacio.php');
 
-$anotacions = new anotacio($assignatura,$idprofessor,$alumnes,$anotacio,$curs,$data2);
+$anotacions = new anotacio($assignatura,$idprofessor,$alumnes,  utf8_decode($anotacio),$curs,$data2);
 $anotacions->insertanotacio();
