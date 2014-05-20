@@ -248,7 +248,7 @@ if ($_SESSION['tipus']!=1) {
                 <h4 class="glyphicon glyphicon-list"></h4><br/>Matricular
               </a>
               <a href="#" class="list-group-item text-center" id="bmatricular">
-                <h4 class="glyphicon glyphicon-list"></h4><br/>Crear assignatura
+                <h4 class="glyphicon glyphicon-list-alt"></h4><br/>Crear assignatura
               </a>
               <a href="#" class="list-group-item text-center" id="bmatricular">
                 <h4 class="glyphicon glyphicon-pencil"></h4><br/>Modificar assignatura
