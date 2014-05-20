@@ -188,7 +188,7 @@ if ($_SESSION['tipus']!=1) {
       {// code for IE6, IE5
       xmlhttp7=new ActiveXObject("Microsoft.XMLHTTP");
       }
-
+  }
     xmlhttp7.onreadystatechange=function()
     {
        if (xmlhttp7.readyState===4 && xmlhttp7.status===200)
