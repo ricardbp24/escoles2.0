@@ -1,10 +1,9 @@
 <?php header("refresh:3;url=indexdirector.php");?>
 <?php require_once 'head.php';
 
-/** 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Grup1
+ * @version 0.1
  */
 
 ?>

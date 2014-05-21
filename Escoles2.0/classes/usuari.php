@@ -3,7 +3,7 @@
 /**
  * Description of usuari
  *
- * @author jordi
+ * @author Grup1
  */
 class usuari {
   private $id;
@@ -124,7 +124,11 @@ class usuari {
       $this->alta = 0;
     }
   }
-
+/**
+ * 
+ * @param Funció per mostrar el nom complet d'un alumne
+ * @return String 
+ */
   public function mostrarAlumne($id) {
       $this->id = $id;
       require_once 'connexio.php';
@@ -135,15 +139,6 @@ class usuari {
       return $nomcomplet['Nom'].' '.$nomcomplet['Cognom1'].' '.$nomcomplet['Cognom2'];
   }
 
-  public function mostrarUsuari($id) {
-      $this->id = $id;
-      require_once 'connexio.php';
-      $bd = new connexio();
-      $usuari = $bd->query("SELECT * FROM Usuaris WHERE ID=".$this->getId()." LIMIT 1");
-      $nomcomplet = $usuari->fetch_array(MYSQLI_ASSOC);
-      $bd->close();
-      return $nomcomplet['Nom'].' '.$nomcomplet['Cognom1'].' '.$nomcomplet['Cognom2'];
-  }
 }
 
 ///////////////////DIRECTOR////////////////////////
@@ -152,6 +147,10 @@ class director extends usuari {
     parent::__construct();
     $this->dni = $dni;
   }
+  /**
+   * 
+   * @param Funció per actualitzar les dades del director
+   */
   public function actualitzarDirector() {
     require_once 'connexio.php';
 
@@ -190,7 +189,10 @@ class professor extends usuari {
     parent::__construct();
     $this->dni = $dni;
   }
-
+    /**
+   * 
+   * @param Funció per actualitzar les dades d'un professor
+   */
   public function actualitzarProfessor() {
     require_once 'connexio.php';
 
@@ -230,7 +232,10 @@ class administratiu extends usuari {
 
     $this->dni = $dni;
   }
-
+    /**
+     * 
+    * @param Funció per actualitzar la foto d'un administrador
+    */
   public function actualitzarAdministratiuFoto(){
     require_once 'connexio.php';
 
@@ -242,6 +247,10 @@ class administratiu extends usuari {
 
     $bd->close();
   }
+  /**
+   * 
+   * @param Funció per actualitzar les dades d'un administiu sense foto
+   */
   public function actualitzarAdministratiuSinFoto(){
     require_once 'connexio.php';
 
@@ -253,6 +262,10 @@ class administratiu extends usuari {
 
     $bd->close();
   }
+  /**
+   * 
+   * @param Funció per actualitzar les dades d'un administratiu sense haver actualitzat la foto i la contrasenya
+   */
   public function actualitzarAdministratiuFotoIPass(){
     require_once 'connexio.php';
 
@@ -264,6 +277,10 @@ class administratiu extends usuari {
 
     $bd->close();
   }
+  /**
+   * 
+   * @param Funció per actualitzar les dades d'un administratiu actualitzant la la contrasenya
+   */
   public function actualitzarAdministratiuPass(){
     require_once 'connexio.php';
 
@@ -295,6 +312,10 @@ class nouAdministratiu extends administratiu {
     $this->tipus             = 3;
     $this->alta              = 1;
   }
+  /**
+   * 
+   * @param Funció per insertar un nou usuari
+   */
   public function insertarUsuari(){
     require_once 'connexio.php';
 
@@ -334,7 +355,10 @@ class alumne extends usuari {
   public function setPresonacontacte($pc) {
     $this->persona_contacte = $pc;
   }
-
+    /**
+   * 
+   * @param Funció per actualitzar les dades d'un alumne
+   */
   public function actualitzar() {
     require_once 'connexio.php';
 
@@ -371,7 +395,10 @@ class nouAlumne extends alumne {
     $this->persona_contacte = $pc;
     $this->alta = 1;
   }
-
+    /**
+   * 
+   * @param Funció per insertar un nou alumne
+   */
   public function insertar() {
     require_once 'connexio.php';
 

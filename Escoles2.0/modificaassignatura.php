@@ -1,4 +1,8 @@
 <?php require_once 'head.php';
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 $assignatura = $_REQUEST['a'];
   include_once 'classes/connexio.php';
   include_once 'classes/assignatura.php';
@@ -22,7 +26,7 @@ $assignatura = $_REQUEST['a'];
 <body>
   <?php require_once 'barranav.php';?>
   <div class="">
-    <h3>Modificació d'assignatures </h3>
+    <h3>Modificar assignatures </h3>
     <center>
       <div class="col-md-9">
       <form class="form" role="form" method="post" enctype="multipart/form-data">
@@ -32,7 +36,16 @@ $assignatura = $_REQUEST['a'];
         </div>
         <div class="form-group col-md-4">
           <label class="sr-only" for="professor">Professor</label>
-          <input type="text" class="form-control" name="professor" placeholder="Professor" required="required">
+          <select class="form-control" id="professor" name="professor">
+            <?php require_once 'classes/connexio.php';
+            require_once 'classes/usuari.php';
+            $bd = new connexio;
+            $profes = $bd->query("SELECT ID FROM Usuaris WHERE Tipus = 2");
+            $nom = new usuari;
+            while ($prof = $profes->fetch_array(MYSQLI_ASSOC)){ ?>
+              <option value="<?=$prof['ID'] ?>"><?=$nom->mostrarUsuari($prof['ID'])?></option>
+            <?php } ?>
+          </select>
         </div>
         <div class="form-group col-md-4">
           <label class="sr-only" for="horari">Horari</label>

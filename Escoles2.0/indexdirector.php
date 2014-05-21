@@ -1,4 +1,9 @@
-<?php require_once 'head.php';
+<?php 
+/**
+ * @author Grup1
+ * @version 0.1
+ */
+require_once 'head.php';
 if ($_SESSION['tipus']!=1) {
   switch ($_SESSION['tipus']) {
       case 2:
@@ -188,14 +193,18 @@ if ($_SESSION['tipus']!=1) {
       {// code for IE6, IE5
       xmlhttp7=new ActiveXObject("Microsoft.XMLHTTP");
       }
-  }
+
+
     xmlhttp7.onreadystatechange=function()
     {
        if (xmlhttp7.readyState===4 && xmlhttp7.status===200)
           {
              document.getElementById("taulapaginadaassignatures").innerHTML = xmlhttp7.responseText;
           }
-    };
+    }
+    xmlhttp7.open("GET","filtratassignatura.php?c="+criteri,true);
+    xmlhttp7.send();
+  };
 
 </script>
 <style>
@@ -734,7 +743,7 @@ if ($_SESSION['tipus']!=1) {
                       <input type="text" class="form-control" onkeyup="filtrarAssignatura()" id="inputmodificaAssignatura" placeholder="Assignatura a buscar">
                     </div>
                   </form>
-                    <div id="taulapaginadAula">
+                    <div id="taulapaginadaassignatures">
                     <table class="table table-hover">
                     <thead>
                       <tr>
@@ -747,6 +756,7 @@ if ($_SESSION['tipus']!=1) {
                     <tbody>
                       <?php
                         include_once 'classes/connexio.php';
+                        include_once 'classes/usuari.php';
                         $bd = new connexio();
                         $consulta = $bd->query("SELECT ID FROM Assignatures");
                         $totalfiles = $consulta->num_rows;
@@ -755,16 +765,17 @@ if ($_SESSION['tipus']!=1) {
                         if (($totalfiles % $perpagina)>0) {
                           $totalpagines++;
                         }
-                        $consulta2 = $bd->query("SELECT ID,Assignatura,Professor,Horari,Preu FROM Assignatures ORDER BY Assignatura LIMIT $perpagina");
+                        $consulta2 = $bd->query("SELECT ID,Assignatura,Professor,Horari,Preu FROM Assignatures  ORDER BY Assignatura  LIMIT $perpagina");
                         $i=1;
+                        $nom = new usuari;
                         while ($assignatura = $consulta2->fetch_array(MYSQLI_ASSOC)) { ?>
-                      <tr <?php if ($assignatura['Preu'] == 0) { echo 'class="warning"'; } ?>>
-                        <td><?php echo utf8_encode($assignatura['Assignatura']); ?></td>
-                        <td><?php echo utf8_encode($assignatura['Professor']); ?></td>
-                        <td><?php echo utf8_encode($assignatura['Horari']); ?></td>
-                        <td><?php echo utf8_encode($assignatura['Preu']); ?></td>
-                        <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificaassignatura.php?a=<?php echo $assignatura['ID'] ?>'">Modificar</button></td>
-                      </tr>
+                          <tr <?php if ($assignatura['Preu'] == 0) { echo 'class="warning"'; } ?>>
+                            <td><?php echo utf8_encode($assignatura['Assignatura']); ?></td>
+                            <td><?php echo utf8_encode($nom->mostrarUsuari($assignatura['Professor']))?></td>
+                            <td><?php echo utf8_encode($assignatura['Horari']); ?></td>
+                            <td><?php echo utf8_encode($assignatura['Preu']); ?></td>
+                            <td><button type="button" class="btn btn-success btn-xs" onclick="window.location.href='modificaassignatura.php?a=<?php echo $assignatura['ID'] ?>'">Modificar</button></td>
+                          </tr>
                         <?php $i++; } $bd->close(); ?>
                     </tbody>
                     </table>

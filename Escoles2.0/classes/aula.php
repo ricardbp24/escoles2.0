@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 
 class aula{
 	private $id;
@@ -33,7 +36,10 @@ class aula{
 	public function setPlanta($planta){
 		$this->planta = $planta;
 	}
-
+        /**
+         * 
+         * @param Funció per actualitzar l'aula
+         */
 	public function actualitzaAula(){
 		require_once 'connexio.php';
 
@@ -55,6 +61,10 @@ class novaAula{
 		$this->planta = $planta;
 
 	}
+        /**
+         * 
+         * @param Funció per insertar una aula nova
+         */
 	public function insertaAula(){
 		require_once 'connexio.php';
 
