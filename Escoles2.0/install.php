@@ -144,7 +144,7 @@ if (isset($_SESSION['id'])) {
             <input type="text" class="form-control" name="host" placeholder="Host de la BD" required="" autofocus=""/>
             <input type="text" class="form-control" name="basedades" placeholder="Nom de la BD" required="" />
             <input type="text" class="form-control" name="usuari" placeholder="Usuari BD" required="" />
-            <input type="password" class="form-control" name="Contrasenya" placeholder="Contrassenya" required=""/>
+            <input type="password" class="form-control" name="Contrasenya" placeholder="Contrassenya"/>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                Intal·lar
             </button>
