@@ -15,6 +15,15 @@ class anotacio {
     private $idcurs;
     private $data;
     
+    /**
+     * Constructor de la classe anotació
+     * @param Int $idassignatura
+     * @param Int $idprofessor
+     * @param Int $idalumne
+     * @param String $anotacio
+     * @param Int $idcurs
+     * @param Datatime $data
+     */
     function __construct($idassignatura,$idprofessor,$idalumne,$anotacio,$idcurs,$data) {
         $this->idassignatura = $idassignatura;
         $this->idalumne = $idalumne;
