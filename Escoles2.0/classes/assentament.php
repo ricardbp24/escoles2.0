@@ -3,7 +3,8 @@
 /**
  * 
  * Classe Assentament
- * 
+ * @author Grup1
+ * @version 0.1
  */
 date_default_timezone_set('Europe/Spain');
 
@@ -69,7 +70,11 @@ class assentament {
     public function setFacturat($facturat) {
         $this->facturat = $facturat;
     }
-    
+    /**
+     * 
+     * @param int $mes Crear una remesa del mes
+     * @return boolean
+     */
     public function remesar($mes) {
       require_once 'connexio.php';
       $repetit = FALSE;
@@ -115,7 +120,10 @@ class assentament {
         return TRUE;
       }
     }
-    
+    /**
+     * @param Funció per facturar 
+     * @return boolean
+     */
     public function facturar() {
       require_once 'connexio.php';
       
@@ -156,7 +164,10 @@ class nouAssentament extends assentament {
     parent::setData($data);
     parent::setFacturat(0);
   }
-  
+  /**
+   * Crear un nou assentament
+   * @return boolean
+   */
   public function crear(){
     require_once 'connexio.php';
     $bd = new connexio();

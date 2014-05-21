@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 
 $b=$_REQUEST["b"];
 

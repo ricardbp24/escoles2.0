@@ -1,4 +1,9 @@
-<?php require_once 'head.php';?>
+<?php 
+/**
+ * @author Grup1
+ * @version 0.1
+ */
+require_once 'head.php';?>
 <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="all" />
 <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 </head>

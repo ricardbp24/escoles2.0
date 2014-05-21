@@ -1,4 +1,9 @@
-<?php require_once 'head.php';
+<?php 
+/**
+ * @author Grup1
+ * @version 0.1
+ */
+require_once 'head.php';
 if ($_SESSION['tipus']!=3) {
   switch ($_SESSION['tipus']) {
       case 1:

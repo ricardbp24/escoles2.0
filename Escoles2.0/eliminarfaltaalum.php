@@ -1,7 +1,9 @@
 <?php
 
-/* 
- * Eliminar falta alumne
+/**
+ * @author Grup1
+ * @version 0.1
+ * Eliminar un alumne
  */
     require_once 'classes/connexio.php';
     $id = $_GET['ID'];

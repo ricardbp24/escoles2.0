@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Grup1
+ * @version 0.1
+ * Creem el header i gestionem els usuaris
+ */
     ob_start();
     @session_start();
     if (!isset($_SESSION['tipus'])) {

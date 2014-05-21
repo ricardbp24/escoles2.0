@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 //SELECT 1T, 2T, 3T FROM Notes WHERE ID_Assignatura in(SELECT ID FROM Alumnes WHERE ID in(SELECT ID FROM Assignatures WHERE ID=
 //SELECT aules.ID, Pis, Numero, Capacitat, NumPC, COUNT(aules.ID) AS assignats FROM (aules INNER JOIN alumnesaules ON aules.ID=alumnesaules.IDAula) GROUP BY aules.ID ORDER BY aules.ID ".$ordre
 //SELECT Nom,Cognom1,Cognom2,Notes.ID,1T, 2T, 3T FROM Notes LEFT JOIN Alumnes ON Notes.ID_Alumne = Alumnes.ID WHERE ID_Assignatura in(SELECT ID FROM Alumnes WHERE ID in(SELECT ID FROM Assignatures WHERE ID=

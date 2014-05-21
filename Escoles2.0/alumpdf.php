@@ -1,9 +1,8 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Grup1
+ * @version 0.1
  */
 
 $alumne = $_REQUEST['a'];
@@ -13,7 +12,9 @@ require_once 'classes/connexio.php';
 require_once 'classes/usuari.php';
 
 class PDF extends TFPDF
-{
+{/**
+ * @param Crear el header del PDF que generem
+ */
 function Header()
 {
     $this->SetFont('DejaVu','',25);
@@ -23,6 +24,11 @@ function Header()
     $this->Cell(0,15,'Escoles 2.0',0,0,'C',true);
     $this->Ln(20);
 }
+/**
+ * 
+ * @param int $cap Crear la taula amb les dades
+ * @param String $dades
+ */
 function Taula($cap, $dades)
 {
     $w = array(45, 45, 45, 45);
