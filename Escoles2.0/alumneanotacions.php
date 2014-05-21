@@ -5,7 +5,7 @@ session_start();
  * @author Grup1
  * @version 0.1
  */
-
+    //Parametres  amb metòde $_POST
     $assignatura = $_POST['assignatura'];
     $alumnes = $_POST['alumnes'];
     $idprofessor = $_SESSION['id'];
@@ -13,8 +13,9 @@ session_start();
     $data2= $_POST['data2'];
     $anotacio = $_POST['anotacio'];
 
-    //echo "Assignatura: ".$assignatura."<br>alumnes: ".$alumnes."<br>IDPROF: ".$curs."<br>data: ".$data."<br>anotacio: ".$anotacio."<br>";
+    //Requeriment de la classe anotació
     require_once ('classes/anotacio.php');
-
+    
+    //Cridar al constructor de anotació
     $anotacions = new anotacio($assignatura,$idprofessor,$alumnes,  utf8_decode($anotacio),$curs,$data2);
     $anotacions->insertanotacio();

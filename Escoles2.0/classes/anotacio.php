@@ -1,9 +1,7 @@
 <?php
-
 /**
  * Classe anotació
- * 
- * @author grup1
+ * @author Grup1
  * @version 0.1
  */
 
@@ -24,7 +22,6 @@ class anotacio {
         $this->idcurs = $idcurs;
         $this->anotacio = $anotacio;
         $this->data = $data;
-  
     }
     
     //Get
@@ -57,26 +54,32 @@ class anotacio {
         return $this->data;
     }
     
-    
     //Set
     public function setAnotacio($anotacio) {
         $this->anotacio = $anotacio;
     }
     
-    
+    /**
+     * Funció insertar anotació
+     * @param isertaranotacio de l'alumne
+     * 
+     */
     function insertanotacio(){
         
+        //Requeriment de connexió a la BD
         require_once('connexio.php');
-					
+        
+	//Establir la connexió				
 	$bd = new connexio();
         
+        //Realitzar un insert el la BD de anotacions
 	$bd->query('INSERT INTO Anotacions (ID_Assignatura,ID_Professor,ID_Alumne,Anotacio,IDCurs,Data) VALUES 
         ("'.$this->getIDAssignatura().'","'.$this->getIDProfessor().'","'.$this->getIDAlumne().'","'.$this->getAnotacio().'","'.$this->getIDCurs().'","'.$this->getData().'")');
-       
-        header("Location:indexprofessor.php?pe=3&missatge=anotacio-correcte");
-   
-    $bd->close(); 
         
-    }
-   
+        //Finalment redirecció  qué l'anotació és correcte
+        header("Location:indexprofessor.php?pe=3&missatge=anotacio-correcte");
+        
+        //Tanquem la BD
+        $bd->close();   
+    } 
 }
