@@ -4,6 +4,7 @@
  * Description of usuari
  *
  * @author Grup1
+ * @version 0.1
  */
 class usuari {
   private $id;
@@ -126,7 +127,7 @@ class usuari {
   }
 /**
  * 
- * @param Funció per mostrar el nom complet d'un alumne
+ * @param int $id Funció per mostrar el nom complet d'un alumne
  * @return String 
  */
   public function mostrarAlumne($id) {
@@ -142,7 +143,12 @@ class usuari {
 }
 
 ///////////////////DIRECTOR////////////////////////
+
 class director extends usuari {
+    /**
+     * 
+     * @param int $dni
+     */
   function __construct($dni) {
     parent::__construct();
     $this->dni = $dni;
@@ -165,6 +171,22 @@ class director extends usuari {
 }
 
 class nouDirector extends director {
+    /**
+     * Classe per crear un nou director
+     * @param int $dni
+     * @param String $nom
+     * @param String $c1
+     * @param String $c2
+     * @param String $dn
+     * @param String $p
+     * @param String $t1
+     * @param String $t2
+     * @param String $carrer
+     * @param int $cp
+     * @param String $poblacio
+     * @param String $ae
+     * @param file $foto
+     */
   function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
     parent::__construct($dni);
     $this->nom = $nom;
@@ -185,6 +207,10 @@ class nouDirector extends director {
 }
 
 class professor extends usuari {
+    /**
+     * Constructor de la classe professor amb extenció d'usuari
+     * @param String $dni
+     */
   function __construct($dni) {
     parent::__construct();
     $this->dni = $dni;
@@ -207,6 +233,22 @@ class professor extends usuari {
 }
 
 class nouProfessor extends professor {
+    /**
+     * Constructor per crear un nou professor
+     * @param String $dni
+     * @param String $nom
+     * @param String $c1
+     * @param String $c2
+     * @param String $dn
+     * @param String $p
+     * @param String $t1
+     * @param String $t2
+     * @param String $carrer
+     * @param int $cp
+     * @param String $poblacio
+     * @param String $ae
+     * @param file $foto
+     */
   function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto) {
     parent::__construct($dni);
     $this->nom = $nom;
@@ -227,6 +269,10 @@ class nouProfessor extends professor {
 }
 
 class administratiu extends usuari {
+    /**
+     * Constructor de la clase administratiu amb extenció de la classe usuari
+     * @param String $dni
+     */
   function __construct($dni) {
     parent::__construct();
 
@@ -295,6 +341,23 @@ class administratiu extends usuari {
 }
 
 class nouAdministratiu extends administratiu {
+    /**
+     * Constructor per crear un nou administratiu amb extenció de administratiu
+     * @param String $nom
+     * @param String $c1
+     * @param String $c2
+     * @param String $dn
+     * @param String $t1
+     * @param String $t2
+     * @param String $dni
+     * @param String $carrer
+     * @param int $cp
+     * @param String $p
+     * @param String $poblacio
+     * @param String $ae
+     * @param file $foto
+     * @param int $tipus
+     */
   function __construct($nom,$c1,$c2,$dn,$t1,$t2,$dni,$carrer,$cp,$p,$poblacio,$ae,$foto,$tipus) {
     parent::__construct($dni);
     $this->nom               = $nom;
@@ -336,7 +399,7 @@ class nouAdministratiu extends administratiu {
 class alumne extends usuari {
   private $compte_corrent;
   private $persona_contacte;
-
+  
   function __construct($dni) {
     parent::__construct();
     $this->dni = $dni;
@@ -376,7 +439,24 @@ class alumne extends usuari {
 }
 
 class nouAlumne extends alumne {
-
+    /**
+     * Constructor per crear un alumne nou amb extenció de alumne
+     * @param String $dni
+     * @param String $nom
+     * @param String $c1
+     * @param String $c2
+     * @param String $dn
+     * @param String $p
+     * @param String $t1
+     * @param String $t2
+     * @param String $carrer
+     * @param int $cp
+     * @param String $poblacio
+     * @param String $ae
+     * @param file $foto
+     * @param String $ccc
+     * @param String $pc
+     */
   function __construct($dni,$nom,$c1,$c2,$dn,$p,$t1,$t2,$carrer,$cp,$poblacio,$ae,$foto,$ccc,$pc) {
     parent::__construct($dni);
     $this->nom = $nom;
