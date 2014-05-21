@@ -1,8 +1,10 @@
 <?php
 
 /**
- * Classe anotacio
+ * Classe anotació
  * 
+ * @author grup1
+ * @version 0.1
  */
 
 class anotacio {
@@ -71,32 +73,10 @@ class anotacio {
 	$bd->query('INSERT INTO Anotacions (ID_Assignatura,ID_Professor,ID_Alumne,Anotacio,IDCurs,Data) VALUES 
         ("'.$this->getIDAssignatura().'","'.$this->getIDProfessor().'","'.$this->getIDAlumne().'","'.$this->getAnotacio().'","'.$this->getIDCurs().'","'.$this->getData().'")');
        
-        header("Location:indexprofessor.php?pe=2correcte");
+        header("Location:indexprofessor.php?pe=3&missatge=anotacio-correcte");
    
     $bd->close(); 
         
     }
-    
-    function mostraranotacions() {
-        
-        require_once('connexio.php');
-					
-	$bd = new connexio();
-        
-        $result = $bd->query("SELECT * FROM Anotacions");
-        
-        while ($file = $result->fetch_array(MYSQLI_ASSOC)) {
-        
-        ?>
-            <tr>
-                <td></td><td></td>
-            </tr>
-        <?php    
-        }
-        
-        $bd->close();
-        
-        
-    }
-    
+   
 }

@@ -53,6 +53,7 @@ if ($_SESSION['tipus']!=2) {
     $faltaerror = "ERROR! Aquest alumne/s ja tenen falta";
     $eliminaralum = "Falta alumne eliminada!!";
     $faltacanvi = "Falta de l'alumne canviada!";
+    $anotacio = "Falta de l'alumne realitzada!";
     
     if(!isset($_GET['missatge']) && $_GET['pe'] ){  
         //No mostrar cap valor    
@@ -94,6 +95,16 @@ if ($_SESSION['tipus']!=2) {
         <div class="alert alert-success col-md-6 col-md-offset-3">
             <span class="glyphicon glyphicon-ok"></span>  <?php echo $faltacanvi; ?>  
             <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=2"></a>
+        </div>
+    </div>
+    <?php
+    }else if($_GET['missatge']== 'anotacio-correcte'){
+    
+    ?>
+    <div class="container">
+        <div class="alert alert-success col-md-6 col-md-offset-3">
+            <span class="glyphicon glyphicon-ok"></span>  <?php echo $anotacio; ?>  
+            <a style="float:right; text-decoration: none;" class="glyphicon glyphicon-remove col-md-offset-4" href="indexprofessor.php?pe=3"></a>
         </div>
     </div>
     <?php
