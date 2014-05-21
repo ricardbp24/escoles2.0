@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 $criteri = $_REQUEST['c']; ?>
 <table class="table table-hover">
   <thead>

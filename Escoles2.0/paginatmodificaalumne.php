@@ -1,4 +1,5 @@
 <?php
+
 $numpag = $_REQUEST['npag']; ?>
 <table class="table table-hover">
 <thead>

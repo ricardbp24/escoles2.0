@@ -3,7 +3,8 @@ session_start();
 /**
  * Classe Assignatura
  *
- * Ricard
+ * @author Grup1
+ * @version 0.1
  */
 
 class  assignatura{
@@ -56,7 +57,9 @@ class  assignatura{
     public function setPreu($preu) {
         $this->preu = $preu;
     }
-
+    /**
+     * @param Mostra l'asignatura
+     */
     function mostrarassignatura(){
         require_once 'connexio.php';
         $bd = new connexio();
@@ -71,7 +74,10 @@ class  assignatura{
             }
         $bd->close();
     }
-
+    
+    /**
+     * @param Actualitza l'asignatura
+     */
     public function actualitzaAssignatura(){
         require_once 'connexio.php';
 
@@ -95,6 +101,11 @@ class novaAssignatura extends assignatura {
     $this->horari      = $horari;
     $this->preu        = $preu;
   }
+  
+    /**
+     * @param Insertar una assignatura nova 
+     */
+  
   public function insertaAssignatura(){
     require_once 'connexio.php';
 

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 ob_start();
 require_once 'classes/aula.php';
 $id = $_REQUEST['a'];

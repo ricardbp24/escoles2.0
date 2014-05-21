@@ -1,4 +1,8 @@
 <?php require_once 'head.php';
+/**
+ * @author Grup1
+ * @version 0.1
+ */
 $assignatura = $_REQUEST['a'];
   include_once 'classes/connexio.php';
   include_once 'classes/assignatura.php';
