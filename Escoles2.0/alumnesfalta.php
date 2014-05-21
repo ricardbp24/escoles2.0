@@ -1,5 +1,12 @@
 <?php
     session_start();
+    
+/**
+ * Alumnes per introduir falta
+ * @author Grup1
+ * @version 0.1
+ */
+    //Requeriment de la classe assistencia
     require_once('classes/assistencia.php');
     
     //Valors $_POST
@@ -8,7 +15,6 @@
     $idassig = $_POST['assignatura'];
     $data=$_POST['data'];
     $falta= 'Falta';
-    //var_dump($idalumne);
     
     //Recorrer l'array de idalumne
     foreach ($idal as $idalumne) {

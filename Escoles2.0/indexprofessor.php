@@ -3,6 +3,7 @@
  * Aquest es el index principal de professor on podràs trobar (Posar Notes, faltes d'assistència, 
  * mostrar faltes, anotacions i mostrar anotacions)
  * @author Grup1
+ * @version 0.1
  */
 
 //Si no es usuari professor tipus 2 renviar a la seva localització
@@ -47,7 +48,7 @@ if ($_SESSION['tipus']!=2) {
 <body onload="buscaralum(); calcular();  canviPestanya(); " >
     <?php include_once 'barranav.php';  
     
-    //Missatges
+    //Missatges 
     
     $faltescorrecte = "Alumnes o alumnes amb falta ïntroduida";
     $faltaerror = "ERROR! Aquest alumne/s ja tenen falta";
@@ -155,7 +156,6 @@ if ($_SESSION['tipus']!=2) {
                             ?>
                         </select>
                     </div>
-                      
                         <?php
                             include_once 'classes/connexio.php';
                             $bd = new connexio();
@@ -179,11 +179,7 @@ if ($_SESSION['tipus']!=2) {
                                     <th style="width: 50px;" class="glyphicon glyphicon-refresh"></th>
                                  </tr>
                             </thead>
-                            <tbody id="alumne">
-                                
-                            </tbody>
-                            
-                            
+                            <tbody id="alumne"></tbody>   
                         </table>
                 </div>
                 <!--Final posar notes -->

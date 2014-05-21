@@ -1,8 +1,10 @@
 <?php
-
-/* 
- * Eliminar falta alumne
+/**
+ * Eliminar falta de l'alumne
+ * @author Grup1
+ * @version 0.1
  */
+    //Requeriment de la classe connexio
     require_once 'classes/connexio.php';
     $id = $_GET['ID'];
     $bd = new connexio();
