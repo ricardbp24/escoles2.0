@@ -139,7 +139,7 @@ if (isset($_SESSION['id'])) {
   <body>
     <div id="fullscreen_bg" class="fullscreen_bg"></div>
         <div class="container">
-          <form class="form-signin" method="post" action="login.php">
+          <form class="form-signin" method="post" action="install2.php">
             <h1 class="form-signin-heading text-muted strong">Escoles 2.0</h1>            
             <input type="text" class="form-control" name="host" placeholder="Host de la BD" required="" autofocus=""/>
             <input type="text" class="form-control" name="basedades" placeholder="Nom de la BD" required="" />
